@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PyDraw - ML assist </title>
+</head>
+<body>
+    <h3> This is my first page </h3> <br /> <br />
+
+    {% if all_symbols %}
+        {% for sym in all_symbols %}
+            <p> {{ sym.user }}  {{ sym.predicted }} </p> <br />
+
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,45 @@
+*{
+    box-sizing: border-box;
+    font-family: sans-serif;
+    user-select:none;
+    -webkit-user-select: none;
+}
+
+#canvas{
+position: absolute;
+    left: 200px;
+    top: 200px;
+}
+
+#toolbar{
+    width:200px;
+    height: 200px;
+    padding: 10px;
+    position : absolute;
+    top:200px;
+    left:500px;
+    background-color: #2f2f2f;
+    color:white;
+}
+
+.btn {
+    float: right;
+    margin:10px;
+    height: 30px;
+    padding: 8px;
+    background-color: #434343;
+}
+
+.btn:hover{
+    background-color: #818181;
+}
+
+.textBox{
+float: right;
+    text-align:center;
+    margin:10px;
+    width:50px;
+    height: 30px;
+    background-color: #434343;
+    color:white;
+}

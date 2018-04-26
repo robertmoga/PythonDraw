@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="{% static 'dev/styleBuild.css' %}"/>
+    <script src="{% static 'dev/util.js' %}"> </script>
+
+    <title>PyDraw Dev</title>
+</head>
+{% csrf_token %}
+<body style="margin: 0" onload="setColor('white')" >
+<h3 style="text-align: center;">Build a dataset for PyDraw</h3>
+        <div id="toolbar">
+            <form method="POST">
+            <input type="text" id="labelInput" class="textBox"/>
+            <div id="sendBtn" class="btn">
+                Send to Server</div>
+            </form>
+            <div id="clearBtn" class="btn">
+                    Clear</div>
+
+
+        </div>
+        <div id="test"></div>
+
+
+        <canvas id="canvas" style="display: block;">
+            Sorry, your browser needs an update
+        </canvas>
+
+        <script src="{% static 'dev/mainBuild.js' %}"> </script>
+ </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Draw</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dev/style.css' %}" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="{% static 'dev/util.js' %}"> </script>
+
+</head>
+<body>
+
+<h3> Teste pentru index </h3>
+<input type="button" value="Test" onclick="alertme('JS functioneaza')">
+
+<p>
+
+{% csrf_token %}
+<input id="text" type="text" placeholder="type here.." />
+<input id="btn" type="button" value ="Send to server" onclick="send()">
+<p>
+<hr> <br />
+{% if len %}
+
+Size of array :  <input type="text" size="5" value="{{ len }}">
+<p>
+{% for item in info  %}
+{{item}} <br />
+{% endfor %}
+</p>
+
+{% endif %}
+
+</body>
+</html>
