@@ -108,6 +108,7 @@ def hull_test(img):
     hull = [cv2.convexHull(c) for c in contours]
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
     # final = cv2.drawContours(img, hull, -1, (200, 0, 0), thickness=2)
+    err = 2 #error for croping
 
     new_img = None
     for cnt in contours:
@@ -118,32 +119,54 @@ def hull_test(img):
         # cv2.drawContours(img, [box], -1, (0, 0, 255), 2)
 
         x, y, w, h = cv2.boundingRect(cnt)
-        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        new_img = img[y:y + h, x:x + h]
+        # cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        new_img = img[y-err:y + h + err, x-err:x + w + err]
+        img = new_img
 
-    return new_img
+
+    return img
 
 def test_morpho(img):
-    kernel = np.ones((5, 10))
+    backup_img = img # this wont be processed
+    #mandatory to do closing first because of the open letters
+    kernel = np.ones((4, 8))
     # dilation = cv2.dilate(img, kernel, iterations=1)
     # plotData(dilation, 'dilation')
 
     img = hull_test(img)
 
-    # closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
-    closing=img
-    closing[10][10] = 255
-    plotData(closing , winname='closing')
+    closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+    # closing[10][10] = (200,100,0)
 
+    new_img = colors_conex_alg(img)
+
+
+    plotData(new_img , winname='closing')
+
+
+def colors_conex_alg(img):
+
+    height, width = img.shape[0], img.shape[1]
+    im2 = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
+    # print(int(im2[1][1]))
+    queue = list()
+    dim = height*width
+
+    while len(queue) < dim :
+        for i in 
+
+
+    return img
 
 if __name__ == "__main__":
     print(">> Start  ")
     timer = time.time()
     img = prepare_img()
     # haar_test(img)
-    res = hull_test(img)
-    plotData(res, winname='hull')
-    # test_morpho(img)
+    # res = hull_test(img)
+    # plotData(res, winname='hull')
+    test_morpho(img)
 
 
     print(">> Time elapsed : " + str(time.time()-timer))
