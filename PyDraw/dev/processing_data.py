@@ -12,6 +12,7 @@ import time
 -> Manage the naming
 -> Process the data into the needed shape
 -> Scenario 1 : Test Haar
+-> Test Hull
 -> Scenario 2 : Test RandomForest
 '''
 #Constants
@@ -22,9 +23,9 @@ def read_data_from_file():
     f = open('tempFiles/fis.txt', 'r')
     strOne = f.read()
     f.close()
-    print(">> " +strOne)
+    # print(">> " +strOne)
     data = partition(strOne)
-    print(">> " + strOne)
+    # print(">> " + strOne)
     return data
 
 
@@ -38,7 +39,7 @@ def partition(strOne):
     else:
         return strOne
 
-
+#manages the .txt to .png process
 def save_base64_to_img():
     data = read_data_from_file()
     base64_str = partition(data)
@@ -48,9 +49,8 @@ def save_base64_to_img():
     with open("tempFiles/imageToSave.png", "wb") as fh:
         fh.write(binary_str)
 
+
 # following methods are processing the image
-
-
 def read_image():
     img = cv2.imread('tempFiles/imageToSave.png', cv2.IMREAD_GRAYSCALE)
     return img
@@ -61,8 +61,8 @@ def thresholding (img):
     return thresh
 
 
-def resize_specific_dim(img):
-    resized_image = cv2.resize(img, (28, 28))
+def resize_specific_dim(img, val):
+    resized_image = cv2.resize(img, (val, val))
     #res = cv2.resize(img, None, fx=1/10, fy=1/10, interpolation=cv2.INTER_CUBIC) #for scaling up
     return resized_image
 
@@ -74,7 +74,6 @@ def resize_percent(img, val):
     return resized
 
 def plotData(img, winname):
-    # winname = "image"
     cv2.namedWindow(winname)  # Create a named window
     cv2.moveWindow(winname, 40, 30)  # Move it to (40,30)
     cv2.imshow(winname, img)
@@ -93,30 +92,23 @@ def prepare_img():
     return img
 
 
-def haar_test():
-    save_base64_to_img()
-    char_clf = cv2.CascadeClassifier('tempFiles/xml/cascade1.xml')
-    img = read_image()
-    img = thresholding(img)
-    img = resize_percent(img, 50)
+def haar_test(img):
+    char_clf = cv2.CascadeClassifier('tempFiles/xml/cascade1.xml')#from my laptop
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
 
     char = char_clf.detectMultiScale(img)
     print(">> Char : " + str(char))
     for (x, y, w, h) in char:
         cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-    plotData(img)
+    plotData(img, winname='Haar')
 
 
-def test_hull(img):
-
-
-    # img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+def hull_test(img):
     im2, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
     hull = [cv2.convexHull(c) for c in contours]
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
     # final = cv2.drawContours(img, hull, -1, (200, 0, 0), thickness=2)
+
     new_img = None
     for cnt in contours:
         # cnt = i
@@ -129,22 +121,29 @@ def test_hull(img):
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
         new_img = img[y:y + h, x:x + h]
 
-    # plotData(img,'original img')
-    # print(">> " + str(len(hull) ))
-    # print(">> " + str(hull))
-    return img
-    # plotData(new_img, 'new _ img')
+    return new_img
+
+def test_morpho(img):
+    kernel = np.ones((5, 10))
+    # dilation = cv2.dilate(img, kernel, iterations=1)
+    # plotData(dilation, 'dilation')
+
+    img = hull_test(img)
+
+    # closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+    closing=img
+    closing[10][10] = 255
+    plotData(closing , winname='closing')
 
 
 if __name__ == "__main__":
     print(">> Start  ")
     timer = time.time()
-    # save_base64_to_img()
     img = prepare_img()
-    haar_test()
-    # img2 = test_hull(img)
-    # plotData(img, 'hue ')
-    # hue = haar_test()
-    # plotData(hue, 'result ')
+    # haar_test(img)
+    res = hull_test(img)
+    plotData(res, winname='hull')
+    # test_morpho(img)
+
 
     print(">> Time elapsed : " + str(time.time()-timer))

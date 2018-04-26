@@ -1,4 +1,4 @@
-var colors = ['black', 'white', 'red', 'orange', 'green' ,'blue', 'indigo'];
+var colors = ['rgb(20,20,20)', 'white', 'red', 'orange', 'green' ,'blue', 'indigo'];
 
 
 //this is going to return an array with the class name swatch

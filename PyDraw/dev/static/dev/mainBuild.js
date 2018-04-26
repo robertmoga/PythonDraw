@@ -81,13 +81,12 @@ function sendData()
 {
       var inputLabel = document.getElementById('labelInput');
       var str_label = inputLabel.value;
-//      myAlert('Label-ul meu :' + str_label);
 
     if( str_label.length == 1)
     {
         var imgData = canvas.toDataURL();
         $.post("", { imageData: imgData , imageLabel : str_label});
-        alert("Data sent  " );
+//        alert("Data sent  " );
     }
     else
     {

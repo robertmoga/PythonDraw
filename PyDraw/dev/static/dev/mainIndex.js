@@ -1,5 +1,5 @@
 var canvas = document.getElementById('canvas');
-canvas.style.background = 'red';
+canvas.style.background = 'beige';
 var context = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
@@ -63,5 +63,5 @@ function myAlert(msg) {
 
 function clear()
 {
-    canvas.width = canvas.width;
+    context.clearRect(0,0,canvas.width, canvas.height);
 }

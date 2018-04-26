@@ -2,13 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 import sys
-from django.views.decorators.csrf import csrf_exempt,csrf_protect, requires_csrf_token
+from django.views.decorators.csrf import csrf_exempt, csrf_protect, requires_csrf_token
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
 import cv2
 import base64
-
-
 
 globalData = []
 globalData.append("PyDraw Dev 1.0")
@@ -27,13 +25,14 @@ def IndexTemp(request):
         return render(request, 'dev/index.html')
     elif request.method == 'POST':
         data = request.POST.get('data')
-        print(">> IMG DATA : " + str(data))
-        f = open('F:\\_Licenta\\PyDraw\\PyDraw\\dev\\tempFiles\\fis.txt', 'w')
-        f.write(data)
-        f.close()
-
+        print(">> IMG DATA : " + str(data[:10]))
+        try:
+            f = open('dev/tempFiles/fis.txt', 'w')
+            f.write(data)
+            f.close()
+        except Exception as e:
+            print(">> Eroare la scriere in buffer din /dev : " + str(e))
         return HttpResponseRedirect('/')
-
 
 
 @csrf_exempt
@@ -51,12 +50,6 @@ def testView(request):
 
 
 @csrf_exempt
-def test2View(request):
-    temp = len(globalData)
-    context = {'info': globalData, 'len': temp}
-    return render(request, 'dev/test.html', context)
-
-@csrf_exempt
 def BuildDataSet(request):
     if request.method == 'GET':
         context = {'info': 'nothing'}
@@ -65,69 +58,74 @@ def BuildDataSet(request):
         imageData = request.POST.get('imageData')
         imageLabel = request.POST.get('imageLabel')
         print(">>  Data recieved : " + str(imageLabel) + "   " + str(imageData[:21]))
+        save_images_dataset(imageData, imageLabel)
 
-
-        INDEX_DOC = NEW_DATASET + "/index.txt"
-        BUFFER_DOC = NEW_DATASET + "/buff.txt"
-        IMAGES_DIR = NEW_DATASET + "/images/"
-
-        # print(">. Current directory : " + str(os.path.dirname(os.path.abspath(__file__)) + BUFFER_DOC))
-
-        # if not os.path.exists(NEW_DATASET):
-        #     os.makedirs(NEW_DATASET)
-        # if not os.path.exists(IMAGES_DIR):
-        #     os.makedirs(IMAGES_DIR)
-
-        #read the last picture
-        picNum = -1
-        try:
-            with open(BUFFER_DOC, 'r') as f:
-                temp = f.read()
-                if int(temp) > picNum:
-                    picNum = int(temp)
-                    print(">>> PIC NUM 1 : " + str(picNum))
-                f.close()
-        except Exception as e:
-            print(" >> Eroare la citire din buffer " + str(e))
-
-        test_file(BUFFER_DOC)
-
-        #build name for the new image
-
-        new_image_name = imageLabel+"_"+str(picNum)+".png"
-        new_image_path =IMAGES_DIR+new_image_name
-
-        #save object in directory
-
-        save_base64_to_img(imageData, new_image_path)
-
-        #write in index file the name of the image and the representation in ascii
-
-        try:
-            new_line = new_image_name+" "+str(ord(imageLabel))
-            with open(INDEX_DOC, 'a') as f:
-                f.write(str(new_line)+"\n")
-                f.close()
-        except Exception as e:
-            print(">> Eroare la scriere in index : " + str(e))
-
-
-        #write the new number in the file
-        picNum += 1
-
-        try:
-            with open(BUFFER_DOC, 'w') as f :
-                f.write(str(picNum))
-                print(">>> PIC NUM 2 : " + str(picNum))
-                f.close()
-        except Exception as e:
-            print(" >> Eroare la scriere in buffer :" +str(e))
-
-        test_file(BUFFER_DOC)
 
         return HttpResponseRedirect('/')
 
-#these methods should be moved into another directory
+@csrf_exempt
+def test2View(request):
+    temp = len(globalData)
+    context = {'info': globalData, 'len': temp}
+    return render(request, 'dev/test.html', context)
+
+#method that writes into files and keeps track of the dataset
+def save_images_dataset(imageData, imageLabel):
+    INDEX_DOC = NEW_DATASET + "/index.txt"
+    BUFFER_DOC = NEW_DATASET + "/buff.txt"
+    IMAGES_DIR = NEW_DATASET + "/images/"
+
+    # print(">. Current directory : " + str(os.path.dirname(os.path.abspath(__file__)) + BUFFER_DOC))
+
+    # if not os.path.exists(NEW_DATASET):
+    #     os.makedirs(NEW_DATASET)
+    # if not os.path.exists(IMAGES_DIR):
+    #     os.makedirs(IMAGES_DIR)
+
+    # read the last picture
+    picNum = -1
+    try:
+        with open(BUFFER_DOC, 'r') as f:
+            temp = f.read()
+            if int(temp) > picNum:
+                picNum = int(temp)
+                print(">>> PIC NUM 1 : " + str(picNum))
+            f.close()
+    except Exception as e:
+        print(" >> Eroare la citire din buffer " + str(e))
+
+    test_file(BUFFER_DOC)
+
+    # build name for the new image
+
+    new_image_name = imageLabel + "_" + str(picNum) + ".png"
+    new_image_path = IMAGES_DIR + new_image_name
+
+    # save object in directory
+
+    save_base64_to_img(imageData, new_image_path)
+
+    # write in index file the name of the image and the representation in ascii
+    try:
+        new_line = new_image_name + " " + str(ord(imageLabel))
+        with open(INDEX_DOC, 'a') as f:
+            f.write(str(new_line) + "\n")
+            f.close()
+    except Exception as e:
+        print(">> Eroare la scriere in index : " + str(e))
+
+    # write the new number in the file
+    picNum += 1
+
+    try:
+        with open(BUFFER_DOC, 'w') as f:
+            f.write(str(picNum))
+            print(">>> PIC NUM 2 : " + str(picNum))
+            f.close()
+    except Exception as e:
+        print(" >> Eroare la scriere in buffer :" + str(e))
+
+# these methods should be moved into another directory
 def partition(strOne):
     if ',' in strOne:
         strOne = strOne.partition(",")[2]
@@ -148,7 +146,7 @@ def save_base64_to_img(data, path):
 
 
 def test_file(path):
-    with open(path,'r') as f:
+    with open(path, 'r') as f:
         temp = f.read()
         print(">> Test read : " + temp)
         f.close()
