@@ -134,13 +134,12 @@ def test_morpho(img):
     # plotData(dilation, 'dilation')
 
     img = hull_test(img)
+    cv2.imwrite('hue.jpg', 255-img)
 
     closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
     # closing[10][10] = (200,100,0)
 
     new_img = colors_conex_alg(img)
-
-
     plotData(new_img , winname='closing')
 
 
@@ -149,15 +148,187 @@ def colors_conex_alg(img):
     height, width = img.shape[0], img.shape[1]
     im2 = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
-    # print(int(im2[1][1]))
-    queue = list()
-    dim = height*width
+    arr = dict()
+    global_tag = 1
 
-    while len(queue) < dim :
-        for i in 
+
+    #iterate through pixels
+    for i in range(height):
+        for j in range(width):
+            near_tags = set()
+            current_tag = -1
+            if im2[i][j] == 0:
+                # check for the tags of neighbors
+                if (i - 1, j) in arr:
+                    # print(">> Am intrat in if nord : " + str(i-1) + "," + str(j))
+                    near_tags.add(arr[(i - 1, j)])
+                if (i, j + 1) in arr:
+                    # print(">> Am intrat in if est : " + str(i) + "," + str(j+1))
+                    near_tags.add(arr[(i, j + 1)])
+                if (i + 1, j) in arr:
+                    # print(">> Am intrat in if sud : " + str(i+1) + "," + str(j))
+                    near_tags.add(arr[(i + 1, j)])
+                if (i, j - 1) in arr:
+                    # print(">> Am intrat in if vest : " + str(i) + "," + str(j - 1))
+                    near_tags.add(arr[(i, j - 1)])
+
+                # label the current pixel
+                if len(near_tags) == 1:
+                    # print('Am intart unde trebe')
+                    current_tag = list(near_tags)[0]
+                elif len(near_tags) > 1:
+
+                    near_tags = sorted(near_tags)
+                    current_tag = list(near_tags)[0]
+                    print('Am intart pe belea ' + str(current_tag) + "  " + str(near_tags))
+
+                    # manage the case with two components that become one
+                elif len(near_tags) == 0:
+                    print('Am adaugat un nou tag')
+                    current_tag = global_tag
+                    global_tag += 1
+
+                arr[(i, j)] = current_tag
+
+        cv2.imshow('hue', img)
+        k = cv2.waitKey(30) & 0xff
+        if k == 27:
+            break
+    print(">> gt : " + str(global_tag))
+    import random
+    colors = list()
+    for tag in range(global_tag):
+        r = random.randrange(1, 255)
+        g = random.randrange(1, 255)
+        b = random.randrange(1, 255)
+        # colors.append((b,g,r))
+        for i in range(height):
+            for j in range(width):
+                if arr[i][j] == tag:
+                    img[i][j] = (b, g, r)
+
+    plotData(img, 'hue')
 
 
     return img
+
+def conex2(img):
+    img = hull_test(img)
+    im2 = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    height, width = img.shape[0], img.shape[1]
+    print("Height : " + str(height) + "  width : " + str(width))
+
+    new_tag = 1
+    arr = list()
+
+    for i in range(height):
+        arr.append(i)
+        arr[i]=list()
+        for j in range(width):
+            if im2[i][j] == 0:
+                arr[i].append(-1)
+            else :
+                arr[i].append(0)
+
+    for i in range(height):
+        for j in range(width):
+            if arr[i][j] == -1:
+                near_labels = list()
+                current_label = -1
+                #nord
+                if i-1 >= 0 :
+                    # print("Intru pe nord")
+                    if arr[i-1][j] > 0:
+                        near_labels.append(arr[i-1][j])
+
+                #sud
+                if i+1 < height:
+                    # print("Intru pe sud")
+                    if arr[i+1][j] > 0:
+                        near_labels.append(arr[i+1][j])
+
+                #est
+                if j+1 < width:
+                    # print("Intru pe est")
+                    if arr[i][j+1] > 0:
+                        near_labels.append(arr[i][j+1])
+
+                #vest
+                if j-1 >= 0:
+                    # print("Intru pe vest  : " + str(i) + "  " + str(j-1) )
+                    if arr[i][j-1] > 0:
+                        # print(">> vest : trec de conditie ")
+                        near_labels.append(arr[i][j-1])
+
+                if len(near_labels) >0:
+                    current_label = sorted(near_labels)[0]
+                    arr[i][j] = current_label
+                else :
+                    current_label = new_tag
+                    new_tag += 1
+                    arr[i][j] = current_label
+
+    print(">> gt : " + str(new_tag))
+    import random
+    colors = list()
+    for tag in range(new_tag):
+        r = random.randrange(1,255)
+        g = random.randrange(1,255)
+        b = random.randrange(1,255)
+        # colors.append((b,g,r))
+        for i in range(height):
+            for j in range(width):
+                if arr[i][j] == tag:
+                    img[i][j] = (b, g, r)
+
+
+
+    plotData(img, 'hue')
+
+    # print(str(arr))
+
+def test():
+    # arr = dict()
+    #
+    # arr[(1, 1)] = 5
+    # arr[(1, 2)] = 8
+    # arr[(1, 3)] = 10
+    #
+    # a = list()
+    # if (1, 4) in arr:
+    #     a.append(arr[(1, 1)])
+    #
+    # print(str(a))
+
+    a = list()
+    a.append(1)
+    a.append(2)
+
+    a[0] = list()
+    a[0].append(-1)
+    a[0].append(2)
+
+    if a[0][0] :
+        print(type(a[0][0]))
+
+def conex3(img):
+    im2, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+    # final = cv2.drawContours(img, contours, 0, (0, 0, 255), thickness=3)
+    cv2.fillPoly(img, contours, color=(255, 255, 255))
+
+    plotData(img, 'hue')
+    kernel = np.ones((2, 2))
+
+    dilation = cv2.dilate(img, kernel, iterations=4)
+    plotData(dilation, 'dilation')
+
+    closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+
+    plotData(closing, 'closing')
+
+
+
 
 if __name__ == "__main__":
     print(">> Start  ")
@@ -166,7 +337,9 @@ if __name__ == "__main__":
     # haar_test(img)
     # res = hull_test(img)
     # plotData(res, winname='hull')
-    test_morpho(img)
-
+    # test_morpho(img)
+    # test()
+    # conex2(img)
+    conex3(img)
 
     print(">> Time elapsed : " + str(time.time()-timer))
