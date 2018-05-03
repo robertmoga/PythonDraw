@@ -108,14 +108,14 @@ def hull_test(img):
     hull = [cv2.convexHull(c) for c in contours]
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
     # final = cv2.drawContours(img, hull, -1, (200, 0, 0), thickness=2)
-    err = 2 #error for croping
+    err = 20 #error for croping
 
     new_img = None
     for cnt in contours:
         # cnt = i
-        rect = cv2.minAreaRect(cnt)
-        box = cv2.boxPoints(rect)
-        box = np.int0(box)
+        # rect = cv2.minAreaRect(cnt)
+        # box = cv2.boxPoints(rect)
+        # box = np.int0(box)
         # cv2.drawContours(img, [box], -1, (0, 0, 255), 2)
 
         x, y, w, h = cv2.boundingRect(cnt)
@@ -123,7 +123,7 @@ def hull_test(img):
         new_img = img[y-err:y + h + err, x-err:x + w + err]
         img = new_img
 
-
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     return img
 
 def test_morpho(img):
@@ -141,7 +141,6 @@ def test_morpho(img):
 
     new_img = colors_conex_alg(img)
     plotData(new_img , winname='closing')
-
 
 def colors_conex_alg(img):
 
@@ -311,35 +310,98 @@ def test():
     if a[0][0] :
         print(type(a[0][0]))
 
+
+'''
+Conex3 will return the image with filled in forms 
+return the image
+'''
 def conex3(img):
     im2, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
     # final = cv2.drawContours(img, contours, 0, (0, 0, 255), thickness=3)
     cv2.fillPoly(img, contours, color=(255, 255, 255))
 
-    plotData(img, 'hue')
-    kernel = np.ones((2, 2))
+    # plotData(img, 'hue')
+    kernel1 = np.ones((30, 2))
+    kernel2 = np.ones((3, 3))
 
-    dilation = cv2.dilate(img, kernel, iterations=4)
-    plotData(dilation, 'dilation')
+    # dilation = cv2.dilate(img, kernel, iterations=1)
+    # plotData(dilation, 'dilation')
+    # erosion = cv2.erode (dilation, kernel, iterations = 1 )
+    # plotData(erosion, 'ersion')
 
-    closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+    dilation = cv2.dilate(img, kernel2, iterations=1)
+    closing = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel1)
+    erosion = cv2.erode(closing, kernel2, iterations=2)
 
-    plotData(closing, 'closing')
+    # plotData(closing, 'closing')
+
+    return erosion
+
+def getHistogramValues(img):
+
+    height, width = img.shape[0], img.shape[1]
+    white_values = list()
+
+    im2 = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
+    for i in range(width):
+        white_values.append(0)
+        for j in range(height):
+            # print(im2[i][j])
+            if im2[j][i] == 255:
+                white_values[i] += 1
+
+    # print(str(white_values))
+    return white_values
+
+def getBoundariesFromHistogram(white_values):
+
+    boundaries = list()
+
+    def trigger(pos, vec):
+        count = 0
+        for i in range(pos, len(vec)-1):
+            if abs(vec[i] - vec[i + 1]) > 4:
+                return count
+            count += 1
+
+        return -1
+
+    for i in range(len(white_values)-1):
+        if white_values[i] < 20 and white_values[i] > 0:
+            if abs(white_values[i] - white_values[i + 1]):
+                val = trigger(i, white_values)
+                if val != -1:
+                    boundaries.append(int(val/2 + i))
+                    i = i + val
+
+    return boundaries
 
 
 
+def doStuff():
+
+    img = prepare_img()
+    res = hull_test(img)
+    img = conex3(res)
+    plotData(img, winname='conex')
+    whites  = getHistogramValues(img)
+    bound = getBoundariesFromHistogram(whites)
+
+    print(bound)
 
 if __name__ == "__main__":
     print(">> Start  ")
     timer = time.time()
-    img = prepare_img()
+    # img = prepare_img()
     # haar_test(img)
     # res = hull_test(img)
     # plotData(res, winname='hull')
     # test_morpho(img)
     # test()
     # conex2(img)
-    conex3(img)
+    # conex3(img)
+    doStuff()
 
     print(">> Time elapsed : " + str(time.time()-timer))
