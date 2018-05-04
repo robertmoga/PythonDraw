@@ -6,6 +6,7 @@ import matplotlib.pyplot as pt
 import pandas as pd
 from sklearn import ensemble
 import time
+import os
 
 '''
 -> Reads from the file that the client uses as a buffer and saves the data as an image
@@ -287,28 +288,11 @@ def conex2(img):
     # print(str(arr))
 
 def test():
-    # arr = dict()
-    #
-    # arr[(1, 1)] = 5
-    # arr[(1, 2)] = 8
-    # arr[(1, 3)] = 10
-    #
-    # a = list()
-    # if (1, 4) in arr:
-    #     a.append(arr[(1, 1)])
-    #
-    # print(str(a))
 
-    a = list()
-    a.append(1)
-    a.append(2)
-
-    a[0] = list()
-    a[0].append(-1)
-    a[0].append(2)
-
-    if a[0][0] :
-        print(type(a[0][0]))
+    for i in range(10):
+        if i == 5:
+            i = 8
+        print(str(i))
 
 
 '''
@@ -352,12 +336,24 @@ def getHistogramValues(img):
             if im2[j][i] == 255:
                 white_values[i] += 1
 
+    with open('tempFiles/whites.txt', 'w') as f:
+        f.write("")
+
+    with open('tempFiles/whites.txt', 'a') as f:
+        for i in range(len(white_values)):
+            f.write(str(i) + " ")
+        f.write('\n')
+        for i in white_values:
+            f.write(str(i) + "  ")
+
+
     # print(str(white_values))
     return white_values
 
 def getBoundariesFromHistogram(white_values):
 
     boundaries = list()
+    index = -1
 
     def trigger(pos, vec):
         count = 0
@@ -369,27 +365,49 @@ def getBoundariesFromHistogram(white_values):
         return -1
 
     for i in range(len(white_values)-1):
-        if white_values[i] < 20 and white_values[i] > 0:
-            if abs(white_values[i] - white_values[i + 1]):
-                val = trigger(i, white_values)
-                if val != -1:
-                    boundaries.append(int(val/2 + i))
-                    i = i + val
+        if index > -1 and i < index:
+            continue
+        val1 = white_values[i]
+        val2 = white_values[i+1]
+        if i>1:
+            val3 = white_values[i-1]
+
+        if ( white_values[i] < 10 and white_values[i] > 0 ) and \
+                (white_values[i+1] < 10 and white_values[i+1]>0) :
+            if abs(white_values[i] - white_values[i + 1]) < 10:
+
+                count = trigger(i, white_values)
+                if count != -1:
+                    boundaries.append(int(count/2 + i))
+                    index = i + count
+
 
     return boundaries
 
+def drawBounds(img, bounds):
+    height, width = img.shape[0], img.shape[1]
 
+    img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+
+    for y in bounds:
+        for x in range(height):
+            img[x][y] = (0,255,0)
+
+    return img
 
 def doStuff():
 
     img = prepare_img()
-    res = hull_test(img)
-    img = conex3(res)
-    plotData(img, winname='conex')
-    whites  = getHistogramValues(img)
-    bound = getBoundariesFromHistogram(whites)
+    img = hull_test(img)
+    img_temp = conex3(img)
 
-    print(bound)
+    whites  = getHistogramValues(img_temp)
+    bounds = getBoundariesFromHistogram(whites)
+
+    print(bounds)
+    plotData(img_temp, winname='conex')
+    img = drawBounds(img, bounds)
+    plotData(img, winname='original')
 
 if __name__ == "__main__":
     print(">> Start  ")
