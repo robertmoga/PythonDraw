@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7550d10d-2fd4-404a-9135-42a0828a1280" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dev/data_to_letters.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/tempFiles/imageToSave.png" afterPath="$PROJECT_DIR$/dev/tempFiles/imageToSave.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/processing_data.py" afterPath="$PROJECT_DIR$/dev/processing_data.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/tempFiles/whites.txt" afterPath="$PROJECT_DIR$/dev/tempFiles/whites.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,8 +20,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dev/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state relative-caret-position="357">
+              <caret line="29" column="38" lean-forward="true" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
                 <element signature="e#2255#3894#0" expanded="false" />
@@ -30,18 +33,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="processing_data.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="processing_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dev/processing_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="360" column="0" lean-forward="true" selection-start-line="360" selection-start-column="0" selection-end-line="360" selection-end-column="0" />
+            <state relative-caret-position="198">
+              <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="82" selection-end-column="27" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#2297#2632#0" expanded="false" />
-                <element signature="e#3464#3928#0" expanded="false" />
-                <element signature="e#3962#6277#0" expanded="false" />
-                <element signature="e#6300#8506#0" expanded="false" />
-                <element signature="e#8524#8869#0" expanded="false" />
+                <element signature="e#3474#3938#0" expanded="false" />
+                <element signature="e#3972#6287#0" expanded="false" />
+                <element signature="e#6310#8516#0" expanded="false" />
+                <element signature="e#9500#10151#0" expanded="false" />
+                <element signature="e#10204#11056#0" expanded="false" />
+                <element signature="e#11091#11286#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data_to_letters.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dev/data_to_letters.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="232">
+              <caret line="99" column="0" lean-forward="true" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+              <folding>
+                <element signature="e#626#756#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -82,8 +98,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -93,6 +109,7 @@
       <find>SECURE_FRAME_DENY</find>
       <find>width</find>
       <find>cvtColor</find>
+      <find>test</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -137,15 +154,17 @@
         <option value="$PROJECT_DIR$/dev/static/dev/save.js" />
         <option value="$PROJECT_DIR$/dev/views.py" />
         <option value="$PROJECT_DIR$/dev/static/dev/colors.js" />
+        <option value="$PROJECT_DIR$/dev/tempFiles/whites.txt" />
         <option value="$PROJECT_DIR$/dev/processing_data.py" />
+        <option value="$PROJECT_DIR$/dev/data_to_letters.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="784" />
+    <option name="x" value="656" />
+    <option name="y" value="39" />
+    <option name="width" value="811" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -181,14 +200,7 @@
               <item name="PyDraw" type="b2602c69:ProjectViewProjectNode" />
               <item name="PyDraw" type="462c0819:PsiDirectoryNode" />
               <item name="dev" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PyDraw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PyDraw" type="462c0819:PsiDirectoryNode" />
-              <item name="dev" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="dev" type="462c0819:PsiDirectoryNode" />
+              <item name="tempFiles" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -198,7 +210,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/Python/derek" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
@@ -220,7 +232,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.processing_data">
+  <component name="RunManager" selected="Python.data_to_letters">
     <configuration name="ProcessRawData" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -238,6 +250,23 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
+    <configuration name="data_to_letters" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Python36\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dev" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="PyDraw" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dev/data_to_letters.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="hosts_dns" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -251,23 +280,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="PyDraw" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dev/tempFiles/hosts_dns.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="procInput" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Python36\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dev/tempFiles" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="PyDraw" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dev/tempFiles/procInput.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -309,17 +321,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.ProcessRawData" />
       <item index="1" class="java.lang.String" itemvalue="Python.tests" />
-      <item index="2" class="java.lang.String" itemvalue="Python.procInput" />
-      <item index="3" class="java.lang.String" itemvalue="Python.hosts_dns" />
-      <item index="4" class="java.lang.String" itemvalue="Python.processing_data" />
+      <item index="2" class="java.lang.String" itemvalue="Python.hosts_dns" />
+      <item index="3" class="java.lang.String" itemvalue="Python.processing_data" />
+      <item index="4" class="java.lang.String" itemvalue="Python.data_to_letters" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.processing_data" />
-        <item index="1" class="java.lang.String" itemvalue="Python.hosts_dns" />
-        <item index="2" class="java.lang.String" itemvalue="Python.tests" />
-        <item index="3" class="java.lang.String" itemvalue="Python.ProcessRawData" />
-        <item index="4" class="java.lang.String" itemvalue="Python.procInput" />
+        <item index="0" class="java.lang.String" itemvalue="Python.data_to_letters" />
+        <item index="1" class="java.lang.String" itemvalue="Python.processing_data" />
+        <item index="2" class="java.lang.String" itemvalue="Python.hosts_dns" />
+        <item index="3" class="java.lang.String" itemvalue="Python.tests" />
+        <item index="4" class="java.lang.String" itemvalue="Python.ProcessRawData" />
       </list>
     </recent_temporary>
   </component>
@@ -337,6 +349,14 @@
       <option name="presentableId" value="Default" />
       <updated>1522150049998</updated>
     </task>
+    <task id="LOCAL-00001" summary="adding alg that fills polylines &#10;process white values on y axis&#10;process the similar intervals with low values in order to settle some bounds&#10;plot lines on bounds">
+      <created>1525423588153</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1525423588153</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -345,13 +365,13 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.246875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.46031746" sideWeight="0.505" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31349206" sideWeight="0.709375" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31349206" sideWeight="0.303125" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31349206" sideWeight="0.696875" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.46031746" sideWeight="0.495" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.244709" sideWeight="0.671875" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -405,14 +425,16 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="adding alg that fills polylines &#10;process white values on y axis&#10;process the similar intervals with low values in order to settle some bounds&#10;plot lines on bounds" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding alg that fills polylines &#10;process white values on y axis&#10;process the similar intervals with low values in order to settle some bounds&#10;plot lines on bounds" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/dev/processing_data.py</url>
-          <line>357</line>
-          <option name="timeStamp" value="18" />
+          <line>376</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -422,25 +444,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="19" />
+      <option name="time" value="21" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dev/static/dev/util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/static/dev/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="1" column="44" lean-forward="false" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PyDraw/settings/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3198">
@@ -639,20 +647,6 @@
       </provider>
     </entry>
     <entry file="file://F:/Python/HaarCascade/prep.py" />
-    <entry file="file://$PROJECT_DIR$/dev/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#2255#3894#0" expanded="false" />
-            <element signature="e#3976#4147#0" expanded="false" />
-            <element signature="e#4190#4346#0" expanded="false" />
-            <element signature="e#4374#4482#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://F:/Python/HaarCascade/face_recognition.py" />
     <entry file="file://$PROJECT_DIR$/dev/hue.jpg">
       <provider selected="true" editor-type-id="images">
@@ -667,10 +661,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dev/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="29" column="38" lean-forward="true" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#2255#3894#0" expanded="false" />
+            <element signature="e#3976#4147#0" expanded="false" />
+            <element signature="e#4190#4346#0" expanded="false" />
+            <element signature="e#4374#4482#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://C:/Python36/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="266" column="0" lean-forward="false" selection-start-line="266" selection-start-column="0" selection-end-line="266" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/tempFiles/whites.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -685,15 +701,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dev/processing_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="360" column="0" lean-forward="true" selection-start-line="360" selection-start-column="0" selection-end-line="360" selection-end-column="0" />
+        <state relative-caret-position="198">
+          <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="82" selection-end-column="27" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#2297#2632#0" expanded="false" />
-            <element signature="e#3464#3928#0" expanded="false" />
-            <element signature="e#3962#6277#0" expanded="false" />
-            <element signature="e#6300#8506#0" expanded="false" />
-            <element signature="e#8524#8869#0" expanded="false" />
+            <element signature="e#3474#3938#0" expanded="false" />
+            <element signature="e#3972#6287#0" expanded="false" />
+            <element signature="e#6310#8516#0" expanded="false" />
+            <element signature="e#9500#10151#0" expanded="false" />
+            <element signature="e#10204#11056#0" expanded="false" />
+            <element signature="e#11091#11286#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/data_to_letters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="99" column="0" lean-forward="true" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <folding>
+            <element signature="e#626#756#0" expanded="false" />
           </folding>
         </state>
       </provider>

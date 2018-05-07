@@ -302,6 +302,7 @@ return the image
 def conex3(img):
     im2, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+    # img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     # final = cv2.drawContours(img, contours, 0, (0, 0, 255), thickness=3)
     cv2.fillPoly(img, contours, color=(255, 255, 255))
 
@@ -309,14 +310,13 @@ def conex3(img):
     kernel1 = np.ones((30, 2))
     kernel2 = np.ones((3, 3))
 
-    # dilation = cv2.dilate(img, kernel, iterations=1)
-    # plotData(dilation, 'dilation')
-    # erosion = cv2.erode (dilation, kernel, iterations = 1 )
-    # plotData(erosion, 'ersion')
 
     dilation = cv2.dilate(img, kernel2, iterations=1)
+    # plotData(dilation, 'dilation')
     closing = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel1)
+    # plotData(closing, 'closing')
     erosion = cv2.erode(closing, kernel2, iterations=2)
+    # plotData(erosion, 'erosion')
 
     # plotData(closing, 'closing')
 
@@ -412,14 +412,15 @@ def doStuff():
 if __name__ == "__main__":
     print(">> Start  ")
     timer = time.time()
-    # img = prepare_img()
+    img = prepare_img()
     # haar_test(img)
     # res = hull_test(img)
     # plotData(res, winname='hull')
     # test_morpho(img)
     # test()
     # conex2(img)
-    # conex3(img)
-    doStuff()
+    temp = conex3(img)
+    plotData(temp, 'temp')
+    doStuff() #woooorking
 
     print(">> Time elapsed : " + str(time.time()-timer))
