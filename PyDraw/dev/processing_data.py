@@ -21,7 +21,7 @@ COMMAND = ""
 
 # does not need to be called
 def read_data_from_file():
-    f = open('tempFiles/fis.txt', 'r')
+    f = open('tempFiles/fis1.txt', 'r')
     strOne = f.read()
     f.close()
     # print(">> " +strOne)
@@ -336,17 +336,6 @@ def getHistogramValues(img):
             if im2[j][i] == 255:
                 white_values[i] += 1
 
-    with open('tempFiles/whites.txt', 'w') as f:
-        f.write("")
-
-    with open('tempFiles/whites.txt', 'a') as f:
-        for i in range(len(white_values)):
-            f.write(str(i) + " ")
-        f.write('\n')
-        for i in white_values:
-            f.write(str(i) + "  ")
-
-
     # print(str(white_values))
     return white_values
 
@@ -419,8 +408,8 @@ if __name__ == "__main__":
     # test_morpho(img)
     # test()
     # conex2(img)
-    temp = conex3(img)
-    plotData(temp, 'temp')
+    # temp = conex3(img)
+    # plotData(temp, 'temp')
     doStuff() #woooorking
 
     print(">> Time elapsed : " + str(time.time()-timer))
