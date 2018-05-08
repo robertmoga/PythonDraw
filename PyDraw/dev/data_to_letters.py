@@ -18,15 +18,34 @@ import os
     Realises histogram-like measurments for whites on y axis
     Analyses the whites values
     Get the bounds between letters - Done
+    
     Normalise letters 
     Return letters 28x28   
 '''
 
-
+'''
+    ImageNormaliser class
+        1 parameter : raw_image -> a nparray/ image
+        
+        Its job is to prepare the image to the needed form and shape
+        
+        Methods : 
+            - plotData() -> able to plot an image in a window : it will be moved in a separate class
+            - thresholding() -> thresholds the image given as parameter : everything that is higher than 0
+                                becomes 255
+            - resize_percent() -> able to resize the image given as param at the percent of dimensions given
+                                    as well as param
+            - resize_specific_dim() -> takes one paramater for dimension and resizes as square
+            - find_contours() -> takes image, finds countours and expands the area with a parameter, err, 
+                                convenient set a 20px
+            - apply_processing() -> applies the transformations above and returns an image ready for analysis
+            
+            User can retrive the needed image from 'image' property that applies apply_processing()
+'''
 class ImageNormaliser:
     def __init__(self, raw_img=None):
         self.raw_image = raw_img
-        self._image = None
+        self._image = self.image
 
     @staticmethod
     def plotData(image, winname):
@@ -84,7 +103,20 @@ class ImageNormaliser:
         if isinstance(value, numpy.ndarray):
             self._image = value
 
-
+'''
+    DataToImage class
+        2 parameters : 
+                dataPath -> the relative path of the buffer file
+                imagePath -> relative path of the new image (+naming)
+    
+        - takes base64 data from buffer file, given as parameter at dataPath. 
+                Did in : read_from_file() -> Returns a string
+        - the string of data is stored in _base64.
+        - turns the base64 into binary and writes into file with .png extension.
+                Did in : base64_to_image() -> Does not return anything
+        - we read with openCV from .png file and return a nparray-image via _image prop.
+                Did in get_image() -> returns a image/nparray
+'''
 class DataToImage:
 
     def __init__(self, dataPath , imagePath):
@@ -95,11 +127,12 @@ class DataToImage:
 
     @property
     def base64(self):
-        return self.base640
+        return self._base64
+
     @base64.setter
     def base64(self, value):
-        #adding a condition
-        self._base64 = value
+        if isinstance(value, str):
+            self._base64 = value
 
     @staticmethod
     def partition(strOne):
@@ -141,11 +174,29 @@ class DataToImage:
         if isinstance(value,str):
             self._image = value
 
+
+'''
+    ImageAnalyser class
+        1 parameter -> raw_image : the image in the needed ready for analysing
+        
+        Methods : 
+            - execute_morpho() -> dies morphological transformations on raw_image 
+                                    via morpho propand stores the result into self.image_morpho
+            - get_histogram_values() -> analyse the image_morpho and returns an array of white values computed on oY axis
+            - get_boundaries_from_histogram() -> returns an array of the boundaries between letters as a series 
+                                                    of Y coordinates, takes whites vector as a param
+            - analyse_image() -> runs the two methods above and puts them together
+            - draw_bounds() -> draws the bounds for demo or verification
+            
+            The main output of the class is the self.bounds array that will be used in determinig the letters and normalise them
+                                             
+'''
 class ImageAnalyser:
 
     def __init__(self, raw_image=None):
         self.raw_image = raw_image
         self.image_morpho = self.morpho
+        self.bounds = self.analyse_image()
 
 
     def execute_morpho(self):
@@ -225,14 +276,17 @@ class ImageAnalyser:
 
         return boundaries
 
-    def drawBounds(self, bounds):
+    def drawBounds(self):
         img = self.raw_image
         height, width = img.shape[0], img.shape[1]
         img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
 
-        for y in bounds:
+        for y in self.bounds:
             for x in range(height):
                 img[x][y] = (0, 255, 0)
+
+        norm = ImageNormaliser(self.raw_image)
+        norm.plotData(img, winname="hue")
 
         return img
 
@@ -241,12 +295,6 @@ class ImageAnalyser:
         bounds = self.get_boundaries_from_histogram(white_values)
 
         return bounds
-
-    def show_bounds(self):
-        bounds = self.analyse_image()
-        img = self.drawBounds(bounds)
-
-        return img
 
 
 if __name__ == "__main__":
@@ -257,6 +305,6 @@ if __name__ == "__main__":
     img = norm.image
 
     analyser = ImageAnalyser(img)
-    img = analyser.show_bounds()
+    img = analyser.drawBounds()
 
-    norm.plotData(img, winname="hue")
+    # norm.plotData(img, winname="hue")
