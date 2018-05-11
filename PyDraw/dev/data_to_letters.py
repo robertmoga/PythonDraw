@@ -296,8 +296,16 @@ class ImageAnalyser:
 
         return bounds
 
+'''
+    CharSynthesizer class 
+        2 parameters : the normalised image and the bounds array 
+'''
+
+class CharSynthesizer():
+    pass
 
 if __name__ == "__main__":
+
     obj = DataToImage("tempFiles/fis1.txt", "tempFiles/newImage.png")
     image = obj.image
 
@@ -307,4 +315,3 @@ if __name__ == "__main__":
     analyser = ImageAnalyser(img)
     img = analyser.drawBounds()
 
-    # norm.plotData(img, winname="hue")
