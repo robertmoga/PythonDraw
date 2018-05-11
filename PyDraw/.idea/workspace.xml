@@ -383,7 +383,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526046785759</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added test_data_aug.py where we generate some augmented data, we will use it to expand the pd_dataset in order to get better results">
+      <created>1526049971869</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1526049971869</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -457,7 +464,8 @@
     <MESSAGE value="addaed comments document like, in data_to_letters for classes in methods" />
     <MESSAGE value="added script to build csv file for dataset -&gt; build_dataset.py&#10;tested in Scripts/tests.py the new dataset, not so satisfying results until now" />
     <MESSAGE value="added some methods in Scripts/tests.py , I think that I might work on data augmentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="added some methods in Scripts/tests.py , I think that I might work on data augmentation" />
+    <MESSAGE value="added test_data_aug.py where we generate some augmented data, we will use it to expand the pd_dataset in order to get better results" />
+    <option name="LAST_COMMIT_MESSAGE" value="added test_data_aug.py where we generate some augmented data, we will use it to expand the pd_dataset in order to get better results" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
