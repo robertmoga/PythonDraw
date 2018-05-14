@@ -354,7 +354,9 @@ class CharSynthesizer():
 
         for l in letters:
             try:
-                return_list.append(self.crop_letter(l))
+                img = self.crop_letter(l)
+                img = ImageNormaliser.resize_specific_dim(img, 100)
+                return_list.append(img)
             except Exception as e:
                 print(">> Exception during the iteration through letters " + str(e))
 
@@ -507,6 +509,8 @@ class CharSynthesizer():
 
         if computed_percent > -1:
             if computed_percent > 35:
+                kernel = np.ones((2, 2))
+                img = cv2.erode(img, kernel, iterations=2)
                 val = int(img.shape[0] / 4)
                 img = self.add_negative_space(img, val)
 
@@ -516,7 +520,7 @@ class CharSynthesizer():
             else:
                 pass
 
-        ImageNormaliser.plotData(img, "char")
+        # ImageNormaliser.plotData(img, "char")
 
         return img
 
@@ -562,7 +566,7 @@ if __name__ == "__main__":
     char = CharSynthesizer(img, analyser.bounds)
     letters = char.normalise_letters()
 
-    # for l in letters:
-    #     ImageNormaliser.plotData(l, "img")
+    for l in letters:
+        ImageNormaliser.plotData(l, "img")
     # teste()
 

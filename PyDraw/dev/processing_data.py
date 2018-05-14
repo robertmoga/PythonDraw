@@ -402,14 +402,15 @@ if __name__ == "__main__":
     print(">> Start  ")
     timer = time.time()
     img = prepare_img()
-    haar_test(img)
-    # res = hull_test(img)
-    # plotData(img, winname='haar')
-    # test_morpho(img)
-    # test()
-    # conex2(img)
-    # temp = conex3(img)
-    # plotData(temp, 'temp')
+    img = hull_test(img)
+    print(img.shape)
+    img = resize_specific_dim(img, 150)
+    print(img.shape)
+    img = resize_specific_dim(img, 200)
+    print(img.shape)
+    plotData(img, "trial")
+
+    # haar_test(img)
     # doStuff() #woooorking
 
     print(">> Time elapsed : " + str(time.time()-timer))
