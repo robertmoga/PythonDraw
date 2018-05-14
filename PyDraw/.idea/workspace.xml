@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7550d10d-2fd4-404a-9135-42a0828a1280" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/tempFiles/newImage.png" afterPath="$PROJECT_DIR$/dev/tempFiles/newImage.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/data_to_letters.py" afterPath="$PROJECT_DIR$/dev/data_to_letters.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/tempFiles/fis.txt" afterPath="$PROJECT_DIR$/dev/tempFiles/fis.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -397,7 +394,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526300729203</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Did resize of the output to 100x100 px images">
+      <created>1526304460035</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1526304460035</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
