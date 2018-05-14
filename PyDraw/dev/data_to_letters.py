@@ -1,3 +1,5 @@
+from distutils.command.config import config
+
 import cv2
 import base64
 import numpy as np
@@ -100,7 +102,7 @@ class ImageNormaliser:
 
     @image.setter
     def image(self, value):
-        if isinstance(value, numpy.ndarray):
+        if isinstance(value, np.ndarray):
             self._image = value
 
 '''
@@ -196,7 +198,7 @@ class ImageAnalyser:
     def __init__(self, raw_image=None):
         self.raw_image = raw_image
         self.image_morpho = self.morpho
-        self.bounds = self.analyse_image()
+        self._bounds = self.bounds
 
 
     def execute_morpho(self):
@@ -220,8 +222,18 @@ class ImageAnalyser:
 
     @morpho.setter
     def morpho(self, value):
-        if isinstance(value, numpy.ndarray):
+        if isinstance(value, np.ndarray):
             self.image_morpho = value
+
+    @property
+    def bounds(self):
+        self._bounds = self.analyse_image()
+        return self._bounds
+
+    @bounds.setter
+    def bounds(self, value):
+        if isinstance(value, list):
+            self._bounds = value
 
     def get_histogram_values(self):
 
@@ -302,7 +314,111 @@ class ImageAnalyser:
 '''
 
 class CharSynthesizer():
-    pass
+
+    def __init__(self, img, bounds):
+        self.image = img
+        self.bounds = bounds
+        self._letters = self.letters
+
+    @staticmethod
+    def plotData(img, winname):
+        cv2.namedWindow(winname)  # Create a named window
+        cv2.moveWindow(winname, 40, 30)  # Move it to (40,30)
+        cv2.imshow(winname, img)
+
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    @property
+    def letters(self):
+        self._letters = None #fill in with logic methods
+        return self._letters
+
+    @letters.setter
+    def letters(self, value):
+        if isinstance(value, list):
+            self._letters = value
+
+    def define_letters(self):
+        height, width = img.shape[0], img.shape[1]
+        bounds = self.bounds
+        bounds = [0] + bounds + [width]
+
+        letters = list()
+        for elem in range(len(bounds)):
+            char = list()
+            if elem == 0:
+                continue
+            else:
+                char = img[:, bounds[elem-1]:bounds[elem]]
+                letters.append(char)
+
+        return letters
+
+
+    def normalise_letters(self):
+        letters = self.define_letters()
+
+        for l in letters:
+            try :
+                self.crop_letter(l)
+            except Exception as e:
+                ImageNormaliser.plotData(l, "exception")
+
+
+    def crop_letter(self, img):
+        im2, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        height, width = img.shape[0], img.shape[1]
+        y_max = -1
+        y_min = height + 1
+        x_coords = list()
+
+        for i in contours:
+            for j in i:
+                for elem in j:
+                    y = elem[1]
+                    x_coords.append(elem[0])
+                    if y > y_max:
+                        y_max = y
+                    elif y < y_min:
+                        y_min = y
+
+        x_coords= np.array(x_coords)
+        x_distrib = x_coords.sum()/len(x_coords)
+
+        if height > width:
+            image = img[y_min : y_max, :]
+            self.fill_letter(image,x_distrib)
+            #square
+        else:
+            #square
+            pass
+
+
+
+    @staticmethod
+    def fill_letter(image,x_distrib):
+        direction = None
+        height, width = image.shape[0], image.shape[1]
+        #establish the direction for fill
+        if x_distrib > width/2:
+            direction = "right"
+        else :
+            direction = "left"
+
+        im = np.array(image)
+        val = height - width
+        fill = np.zeros((height, val))
+
+        # fill in by direction
+        if direction == "left":
+            im = np.hstack((fill, im))
+        else:
+            im = np.hstack((im, fill))
+
+        ImageNormaliser.plotData(im, "hue")
+
+
 
 if __name__ == "__main__":
 
@@ -313,5 +429,8 @@ if __name__ == "__main__":
     img = norm.image
 
     analyser = ImageAnalyser(img)
-    img = analyser.drawBounds()
+    # im2 = analyser.drawBounds()
+
+    char = CharSynthesizer(img, analyser.bounds)
+    char.normalise_letters()
 

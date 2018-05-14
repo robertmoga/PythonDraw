@@ -94,7 +94,7 @@ def prepare_img():
 
 
 def haar_test(img):
-    char_clf = cv2.CascadeClassifier('tempFiles/xml/cascade1.xml')#from my laptop
+    char_clf = cv2.CascadeClassifier('tempFiles/xml/cascade2.xml')#from my laptop
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
 
     char = char_clf.detectMultiScale(img)
@@ -402,14 +402,14 @@ if __name__ == "__main__":
     print(">> Start  ")
     timer = time.time()
     img = prepare_img()
-    # haar_test(img)
+    haar_test(img)
     # res = hull_test(img)
-    # plotData(res, winname='hull')
+    # plotData(img, winname='haar')
     # test_morpho(img)
     # test()
     # conex2(img)
     # temp = conex3(img)
     # plotData(temp, 'temp')
-    doStuff() #woooorking
+    # doStuff() #woooorking
 
     print(">> Time elapsed : " + str(time.time()-timer))
