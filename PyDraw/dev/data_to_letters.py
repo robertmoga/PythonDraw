@@ -10,6 +10,7 @@ from sklearn import ensemble
 import time
 import os
 
+from PyDraw.views import hello_world
 
 '''
     Reads data from file where the server that is buffering it
@@ -320,18 +321,9 @@ class CharSynthesizer():
         self.bounds = bounds
         self._letters = self.letters
 
-    @staticmethod
-    def plotData(img, winname):
-        cv2.namedWindow(winname)  # Create a named window
-        cv2.moveWindow(winname, 40, 30)  # Move it to (40,30)
-        cv2.imshow(winname, img)
-
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
     @property
     def letters(self):
-        self._letters = None #fill in with logic methods
+        self._letters = self.define_letters()
         return self._letters
 
     @letters.setter
@@ -358,12 +350,15 @@ class CharSynthesizer():
 
     def normalise_letters(self):
         letters = self.define_letters()
+        return_list = list()
 
         for l in letters:
-            try :
-                self.crop_letter(l)
+            try:
+                return_list.append(self.crop_letter(l))
             except Exception as e:
-                ImageNormaliser.plotData(l, "exception")
+                print(">> Exception during the iteration through letters " + str(e))
+
+        return return_list
 
 
     def crop_letter(self, img):
@@ -372,53 +367,186 @@ class CharSynthesizer():
         y_max = -1
         y_min = height + 1
         x_coords = list()
+        y_coords = list()
+        return_image = None
 
         for i in contours:
             for j in i:
                 for elem in j:
                     y = elem[1]
                     x_coords.append(elem[0])
+                    y_coords.append(elem[1])
                     if y > y_max:
                         y_max = y
                     elif y < y_min:
                         y_min = y
 
-        x_coords= np.array(x_coords)
-        x_distrib = x_coords.sum()/len(x_coords)
+        if y_max > -1 and y_min < height+1:
+            x_coords= np.array(x_coords)
+            y_coords = np.array(y_coords)
+            x_distrib = x_coords.sum()/len(x_coords)
+            y_distrib = y_coords.sum()/len(y_coords)
+            new_height = y_max - y_min
+            image = img[y_min: y_max, :]
 
-        if height > width:
-            image = img[y_min : y_max, :]
-            self.fill_letter(image,x_distrib)
-            #square
+            try:
+                if new_height > width:
+                    return_image = self.fill_letter_ox(image, x_distrib)
+                    return_image = self.square_img(return_image)
+                elif width > new_height:
+                    return_image = self.fill_letter_oy(image, y_distrib, height)
+                    return_image = self.square_img(return_image)
+                    pass
+                else:
+                    return_image = self.square_img(image)
+                    pass
+            except Exception as e:
+                print("Exception in filling the letters : " + str(e))
         else:
-            #square
-            pass
+            print(">> There is no char in this split")
 
-
+        return return_image
 
     @staticmethod
-    def fill_letter(image,x_distrib):
+    def fill_letter_ox(image,x_distrib):
         direction = None
         height, width = image.shape[0], image.shape[1]
+        im = None
         #establish the direction for fill
         if x_distrib > width/2:
             direction = "right"
-        else :
+        else:
             direction = "left"
+        try:
+            im = np.array(image)
+            val = height - width
+            fill = np.zeros((height, val))
+
+            try:
+                # fill in by direction
+                if direction == "left":
+                    im = np.hstack((fill, im))
+                else:
+                    im = np.hstack((im, fill))
+            except Exception as ex:
+                print(">> Exception on applying hstack : " + str(ex))
+
+        except Exception as e:
+            print(">> Exception in building the fill " + str(e))
+
+        # if im is not None:
+            # ImageNormaliser.plotData(im, "hue")
+        return im
+
+    @staticmethod
+    def fill_letter_oy(image, y_distrib, original_height):
+        direction = None
+        im = None
+        height, width = image.shape[0], image.shape[1]
+        # establish the direction for fill
+        if y_distrib > original_height / 2:
+            direction = "bottom" #trebuie inversate
+        else:
+            direction = "top"
 
         im = np.array(image)
-        val = height - width
-        fill = np.zeros((height, val))
+        val = width - height
 
-        # fill in by direction
-        if direction == "left":
-            im = np.hstack((fill, im))
-        else:
-            im = np.hstack((im, fill))
+        #treat the case where we need to add more fill lines that the actual image height
+        #this way we overcome the isolation of the image
+        try:
+            if val > height*0.7:
+                fill_height = int(val/2)
+                if val % 2 == 0:
+                    fill1 = np.zeros((fill_height, width))
+                    fill2 = np.zeros((fill_height, width))
+                    # print(">>> : " + str(fill1.shape) + "  " + str(fill2.shape))
 
-        ImageNormaliser.plotData(im, "hue")
+                else:
+                    fill1 = np.zeros((fill_height+1, width))
+                    fill2 = np.zeros((fill_height, width))
+
+                try:
+                    im = np.vstack((fill1, im))
+                    im = np.vstack((im, fill2))
+                except Exception as ex:
+                    print(">> Exception in applying vstack : " + str(ex))
+
+            else :
+                fill = np.zeros((val, width))
+                # fill in by direction
+                try:
+                    if direction == "top":
+                        im = np.vstack((fill, im))
+                    else:
+                        im = np.vstack((im, fill))
+                except Exception as ex:
+                    print(">> Exception in applying vstack : " + str(ex))
+
+        except Exception as e:
+            print(">> Exception in building fill" + str(e))
+
+        if im is not None:
+            print(">> Char shape : " + str(im.shape))
+            # ImageNormaliser.plotData(im, "hue")
+        return im
 
 
+    def square_img(self,char):
+
+        img = char
+        #count the distribution of whites vs blacks
+
+        black = np.count_nonzero(img == 0)
+        white = np.count_nonzero(img > 0)
+        print(">> Black value " + str(black) + "  White value " + str(white))
+
+        computed_percent = -1
+        if black > white:
+            computed_percent = int((white * 100)/ black)
+
+        if computed_percent > -1:
+            if computed_percent > 35:
+                val = int(img.shape[0] / 4)
+                img = self.add_negative_space(img, val)
+
+            elif computed_percent > 20 and computed_percent < 35:
+                val = int(img.shape[0] / 4) #discutabil
+                img = self.add_negative_space(img, val)
+            else:
+                pass
+
+        ImageNormaliser.plotData(img, "char")
+
+        return img
+
+    @staticmethod
+    def add_negative_space(img, val):
+        side_len = img.shape[0]
+
+        fill1 = np.zeros((val, side_len))  # intended for vstack
+        fill2 = np.zeros(((side_len + val*2), val))  # intended for hstack
+
+        img = np.vstack((fill1, img))
+        img = np.vstack((img, fill1))
+        img = np.hstack((fill2, img))
+        img = np.hstack((img, fill2))
+
+        return img
+
+def teste():
+
+    a = np.ones((1, 10))
+    b = np.ones((1,4))
+    c = np.zeros((1,6))
+
+    hue = np.hstack((a, c))
+    hue = np.hstack((hue, b))
+
+    # print(hue)
+
+    val = np.count_nonzero(hue == 0)
+    print(val)
 
 if __name__ == "__main__":
 
@@ -432,5 +560,9 @@ if __name__ == "__main__":
     # im2 = analyser.drawBounds()
 
     char = CharSynthesizer(img, analyser.bounds)
-    char.normalise_letters()
+    letters = char.normalise_letters()
+
+    # for l in letters:
+    #     ImageNormaliser.plotData(l, "img")
+    # teste()
 
