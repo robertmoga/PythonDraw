@@ -311,7 +311,19 @@ class ImageAnalyser:
 
 '''
     CharSynthesizer class 
-        2 parameters : the normalised image and the bounds array 
+        2 parameters : the normalised image and the bounds array
+        Methods : callable is only : 
+                    - normalise_letters() that takes the bounds and image input and returns a list of
+                        np.array letters 100x100 and can be accesed by property 'letters'
+        Other methods : 
+            - define_letters : split the normalised image by bounds and return a list of np.array of letters
+            - crop_letter() : has a letter as input an copmputes the contour points distribution on
+                x and y axis and then fills with negative space depending on the distribution and then
+                makes the images square
+            - fill_letter_ox, and fill_letter_oy fills the letter on axis depending on x or y distribution
+            - square_img : computes the rate of whites reported to blacks and fills with a negative frame
+                            depending on the result of distribution
+            - add_negative_space : adding the needed space on the sides of the image 
 '''
 
 class CharSynthesizer():
@@ -323,7 +335,7 @@ class CharSynthesizer():
 
     @property
     def letters(self):
-        self._letters = self.define_letters()
+        self._letters = self.normalise_letters()
         return self._letters
 
     @letters.setter
@@ -351,6 +363,9 @@ class CharSynthesizer():
     def normalise_letters(self):
         letters = self.define_letters()
         return_list = list()
+
+        #testing
+        # self.crop_letter(letters[4])
 
         for l in letters:
             try:
@@ -514,7 +529,7 @@ class CharSynthesizer():
                 val = int(img.shape[0] / 4)
                 img = self.add_negative_space(img, val)
 
-            elif computed_percent > 20 and computed_percent < 35:
+            elif computed_percent > 15 and computed_percent < 35:
                 val = int(img.shape[0] / 4) #discutabil
                 img = self.add_negative_space(img, val)
             else:
@@ -554,7 +569,7 @@ def teste():
 
 if __name__ == "__main__":
 
-    obj = DataToImage("tempFiles/fis1.txt", "tempFiles/newImage.png")
+    obj = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
     image = obj.image
 
     norm = ImageNormaliser(image)
@@ -564,7 +579,7 @@ if __name__ == "__main__":
     # im2 = analyser.drawBounds()
 
     char = CharSynthesizer(img, analyser.bounds)
-    letters = char.normalise_letters()
+    letters = char.letters
 
     for l in letters:
         ImageNormaliser.plotData(l, "img")
