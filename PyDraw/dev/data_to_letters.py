@@ -3,19 +3,19 @@ from distutils.command.config import config
 import cv2
 import base64
 import numpy as np
-import threading
-import matplotlib.pyplot as pt
-import pandas as pd
-from sklearn import ensemble
+# import threading
+# import matplotlib.pyplot as pt
+# import pandas as pd
+# from sklearn import ensemble
 import time
 import os
 
-from PyDraw.views import hello_world
+# from PyDraw.views import hello_world
 
 '''
     Reads data from file where the server that is buffering it
     Normalises data to the desierd shape 
-            - tresholding
+            - thresholding
             - resize : in order to reduce the area for computation : percent + contours
             - does morphological transformations
     Realises histogram-like measurments for whites on y axis
@@ -317,7 +317,7 @@ class ImageAnalyser:
                         np.array letters 100x100 and can be accesed by property 'letters'
         Other methods : 
             - define_letters : split the normalised image by bounds and return a list of np.array of letters
-            - crop_letter() : has a letter as input an copmputes the contour points distribution on
+            - crop_letter() : has a letter as input an computes the contour points distribution on
                 x and y axis and then fills with negative space depending on the distribution and then
                 makes the images square
             - fill_letter_ox, and fill_letter_oy fills the letter on axis depending on x or y distribution
@@ -370,7 +370,7 @@ class CharSynthesizer():
         for l in letters:
             try:
                 img = self.crop_letter(l)
-                img = ImageNormaliser.resize_specific_dim(img, 100)
+                img = ImageNormaliser.resize_specific_dim(img, 128)
                 return_list.append(img)
             except Exception as e:
                 print(">> Exception during the iteration through letters " + str(e))
@@ -567,6 +567,62 @@ def teste():
     val = np.count_nonzero(hue == 0)
     print(val)
 
+'''
+    VectorNormaliser class reduces all of the intermediate values between 0 and 255
+    and also make the values int
+    
+'''
+class VectorNormaliser:
+    def __init__(self, images):
+        self.images = images
+
+    def normalise(self):
+
+        for i in range(len(self.images)):
+            img = self.images[i]
+            ret, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+
+            img = img.astype('int')
+            self.images[i] = img
+
+        return self.images
+
+
+class OutputWriter:
+
+    def __init__(self, images, output_path):
+        self.output_file = output_path
+        self.images = images
+
+
+
+    def init_output_file(self):
+        open(self.output_file, 'w').close()
+
+    @staticmethod
+    def build_line(img):
+        letter = str()
+
+        for line in img:
+            for elem in line:
+                try:
+                    letter = letter + str(elem) + ","
+                except Exception as e:
+                    print("Exception in building a new text : " + str(e))
+
+        # ImageNormaliser.plotData(img, "hue")
+        return letter[0:-1]
+
+    def write(self):
+        with open(self.output_file, 'a') as f:
+            for letter in self.images:
+                normalised_letter = self.build_line(letter)
+                print(normalised_letter)
+                f.write(normalised_letter+'\n')
+                # f.write('\n')
+            f.close()
+
+
 if __name__ == "__main__":
 
     obj = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
@@ -580,8 +636,13 @@ if __name__ == "__main__":
 
     char = CharSynthesizer(img, analyser.bounds)
     letters = char.letters
+    out_file_path = 'D:\Python\ConvolutionalTest\letters_from_pd\output1.txt'
 
-    for l in letters:
-        ImageNormaliser.plotData(l, "img")
+    out_norm = VectorNormaliser(letters)
+    letters = out_norm.normalise()
+
+    ow = OutputWriter(letters, out_file_path)
+    ow.init_output_file()
+    ow.write()
     # teste()
 
