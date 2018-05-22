@@ -9,6 +9,8 @@ import numpy as np
 # from sklearn import ensemble
 import time
 import os
+# import keras
+# from keras.models import load_model
 
 # from PyDraw.views import hello_world
 
@@ -51,7 +53,7 @@ class ImageNormaliser:
         self._image = self.image
 
     @staticmethod
-    def plotData(image, winname):
+    def plotData(image, winname="win"):
 
         cv2.namedWindow(winname)  # Create a named window
         cv2.moveWindow(winname, 40, 30)  # Move it to (40,30)
@@ -344,7 +346,7 @@ class CharSynthesizer():
             self._letters = value
 
     def define_letters(self):
-        height, width = img.shape[0], img.shape[1]
+        height, width = self.image.shape[0], self.image.shape[1]
         bounds = self.bounds
         bounds = [0] + bounds + [width]
 
@@ -354,7 +356,7 @@ class CharSynthesizer():
             if elem == 0:
                 continue
             else:
-                char = img[:, bounds[elem-1]:bounds[elem]]
+                char = self.image[:, bounds[elem-1]:bounds[elem]]
                 letters.append(char)
 
         return letters
@@ -364,13 +366,10 @@ class CharSynthesizer():
         letters = self.define_letters()
         return_list = list()
 
-        #testing
-        # self.crop_letter(letters[4])
-
         for l in letters:
             try:
                 img = self.crop_letter(l)
-                img = ImageNormaliser.resize_specific_dim(img, 128)
+                img = ImageNormaliser.resize_specific_dim(img, 64)
                 return_list.append(img)
             except Exception as e:
                 print(">> Exception during the iteration through letters " + str(e))
@@ -579,7 +578,9 @@ class VectorNormaliser:
     def normalise(self):
 
         for i in range(len(self.images)):
+
             img = self.images[i]
+            ImageNormaliser.plotData(img, "hue")
             ret, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
 
             img = img.astype('int')
@@ -636,7 +637,11 @@ if __name__ == "__main__":
 
     char = CharSynthesizer(img, analyser.bounds)
     letters = char.letters
-    out_file_path = 'D:\Python\ConvolutionalTest\letters_from_pd\output1.txt'
+
+    for elem in letters:
+        ImageNormaliser.plotData(elem, 'hue')
+
+    out_file_path = 'F:\Python\learn_keras\letters_from_pd\output1.txt'
 
     out_norm = VectorNormaliser(letters)
     letters = out_norm.normalise()
