@@ -9,10 +9,7 @@ import numpy as np
 # from sklearn import ensemble
 import time
 import os
-# import keras
-# from keras.models import load_model
 
-# from PyDraw.views import hello_world
 
 '''
     Reads data from file where the server that is buffering it
@@ -27,6 +24,79 @@ import os
     Normalise letters 
     Return letters 28x28   
 '''
+
+'''
+    DataToImage class
+        2 parameters : 
+                dataPath -> the relative path of the buffer file
+                imagePath -> relative path of the new image (+naming)
+
+        - takes base64 data from buffer file, given as parameter at dataPath. 
+                Did in : read_from_file() -> Returns a string
+        - the string of data is stored in _base64.
+        - turns the base64 into binary and writes into file with .png extension.
+                Did in : base64_to_image() -> Does not return anything
+        - we read with openCV from .png file and return a nparray-image via _image prop.
+                Did in get_image() -> returns a image/nparray
+'''
+
+
+class DataToImage:
+    def __init__(self, dataPath, imagePath):
+        self._base64 = self.read_from_file(dataPath)
+        self.imageName = imagePath
+        self.base64_to_image()
+        self._image = None
+
+    @property
+    def base64(self):
+        return self._base64
+
+    @base64.setter
+    def base64(self, value):
+        if isinstance(value, str):
+            self._base64 = value
+
+    @staticmethod
+    def partition(strOne):
+        if ',' in strOne:
+            strOne = strOne.partition(",")[2]
+            pad = len(strOne) % 4
+            strOne += "=" * pad
+            return strOne
+        else:
+            return strOne
+
+    def read_from_file(self, dataPath):
+        f = open(dataPath, 'r')
+        strOne = f.read()
+        f.close()
+        # print(">> " +strOne)
+        data = self.partition(strOne)
+        return data
+
+    def base64_to_image(self):
+        base64_str = self.partition(self._base64)
+        binary_str = base64.b64decode(base64_str)
+        # Here comes the naming solution\
+        self.imageName = "tempFiles/newImage.png"
+        with open(self.imageName, "wb") as fh:
+            fh.write(binary_str)
+
+    def get_image(self):
+        img = cv2.imread(self.imageName, cv2.IMREAD_GRAYSCALE)
+        return img
+
+    @property
+    def image(self):
+        self._image = self.get_image()
+        return self._image
+
+    @image.setter
+    def image(self, value):
+        if isinstance(value, str):
+            self._image = value
+
 
 '''
     ImageNormaliser class
@@ -108,76 +178,6 @@ class ImageNormaliser:
         if isinstance(value, np.ndarray):
             self._image = value
 
-'''
-    DataToImage class
-        2 parameters : 
-                dataPath -> the relative path of the buffer file
-                imagePath -> relative path of the new image (+naming)
-    
-        - takes base64 data from buffer file, given as parameter at dataPath. 
-                Did in : read_from_file() -> Returns a string
-        - the string of data is stored in _base64.
-        - turns the base64 into binary and writes into file with .png extension.
-                Did in : base64_to_image() -> Does not return anything
-        - we read with openCV from .png file and return a nparray-image via _image prop.
-                Did in get_image() -> returns a image/nparray
-'''
-class DataToImage:
-
-    def __init__(self, dataPath , imagePath):
-        self._base64 = self.read_from_file(dataPath)
-        self.imageName = imagePath
-        self.base64_to_image()
-        self._image = None
-
-    @property
-    def base64(self):
-        return self._base64
-
-    @base64.setter
-    def base64(self, value):
-        if isinstance(value, str):
-            self._base64 = value
-
-    @staticmethod
-    def partition(strOne):
-        if ',' in strOne:
-            strOne = strOne.partition(",")[2]
-            pad = len(strOne) % 4
-            strOne += "=" * pad
-            return strOne
-        else:
-            return strOne
-
-    def read_from_file(self, dataPath):
-        f = open(dataPath, 'r')
-        strOne = f.read()
-        f.close()
-        # print(">> " +strOne)
-        data = self.partition(strOne)
-        return data
-
-    def base64_to_image(self):
-        base64_str = self.partition(self._base64)
-        binary_str = base64.b64decode(base64_str)
-        # Here comes the naming solution\
-        self.imageName = "tempFiles/newImage.png"
-        with open(self.imageName, "wb") as fh:
-            fh.write(binary_str)
-
-    def get_image(self):
-        img = cv2.imread(self.imageName, cv2.IMREAD_GRAYSCALE)
-        return img
-
-    @property
-    def image(self):
-        self._image = self.get_image()
-        return self._image
-
-    @image.setter
-    def image(self, value):
-        if isinstance(value,str):
-            self._image = value
 
 
 '''
@@ -579,7 +579,6 @@ class VectorNormaliser:
         for i in range(len(self.images)):
 
             img = self.images[i]
-            ImageNormaliser.plotData(img, "hue")
             ret, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
 
             img = img.astype('int')
@@ -636,10 +635,10 @@ if __name__ == "__main__":
     char = CharSynthesizer(img, analyser.bounds)
     letters = char.letters
 
-    # for elem in letters:
-    #     ImageNormaliser.plotData(elem, 'hue')
+    for elem in letters:
+        ImageNormaliser.plotData(elem, 'hue')
 
-    out_file_path = 'F:\Python\learn_keras\letters_from_pd\output1.txt'
+    out_file_path = 'D:\Python\learn_keras\letters_from_pd\output1.txt'
 
     out_norm = VectorNormaliser(letters)
     letters = out_norm.normalise()
