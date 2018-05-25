@@ -4,8 +4,6 @@
     <list default="true" id="7550d10d-2fd4-404a-9135-42a0828a1280" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/data_processing.py" afterPath="$PROJECT_DIR$/dev/data_processing.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/static/dev/util.js" afterPath="$PROJECT_DIR$/dev/static/dev/util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/draw/views.py" afterPath="$PROJECT_DIR$/draw/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,16 +34,17 @@
       <file leaf-file-name="data_processing.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dev/data_processing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="118" column="0" lean-forward="true" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+            <state relative-caret-position="333">
+              <caret line="253" column="0" lean-forward="true" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#354#668#0" expanded="false" />
-                <element signature="e#938#3493#0" expanded="false" />
-                <element signature="e#3534#4834#0" expanded="false" />
-                <element signature="e#4662#4834#0" expanded="false" />
-                <element signature="e#4857#5321#0" expanded="false" />
-                <marker date="1527256707831" expanded="false" signature="1743:2556" ph="..." />
+                <element signature="e#938#4050#0" expanded="false" />
+                <element signature="e#1064#1671#0" expanded="false" />
+                <element signature="e#3477#4050#0" expanded="false" />
+                <element signature="e#4091#5391#0" expanded="false" />
+                <element signature="e#5432#6692#0" expanded="false" />
+                <element signature="e#6523#6692#0" expanded="false" />
+                <element signature="e#6715#7179#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -473,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527255008450</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Finished line segmentation. Started dev of word segmentation">
+      <created>1527256753353</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1527256753353</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -489,7 +495,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32356256" sideWeight="0.875" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40079364" sideWeight="0.875" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -555,7 +561,8 @@
     <MESSAGE value="Added comments for the CharSynthesizer" />
     <MESSAGE value="Started working at corner validation" />
     <MESSAGE value="Mid development of line segmentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mid development of line segmentation" />
+    <MESSAGE value="Finished line segmentation. Started dev of word segmentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished line segmentation. Started dev of word segmentation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -573,7 +580,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="58" />
+      <option name="time" value="62" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -921,16 +928,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dev/data_processing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="118" column="0" lean-forward="true" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+        <state relative-caret-position="333">
+          <caret line="253" column="0" lean-forward="true" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#354#668#0" expanded="false" />
-            <element signature="e#938#3493#0" expanded="false" />
-            <element signature="e#3534#4834#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4857#5321#0" expanded="false" />
-            <marker date="1527256707831" expanded="false" signature="1743:2556" ph="..." />
+            <element signature="e#938#4050#0" expanded="false" />
+            <element signature="e#1064#1671#0" expanded="false" />
+            <element signature="e#3477#4050#0" expanded="false" />
+            <element signature="e#4091#5391#0" expanded="false" />
+            <element signature="e#5432#6692#0" expanded="false" />
+            <element signature="e#6523#6692#0" expanded="false" />
+            <element signature="e#6715#7179#0" expanded="false" />
           </folding>
         </state>
       </provider>
