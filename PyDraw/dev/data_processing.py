@@ -11,6 +11,20 @@ def image_norm(img):
     return img
 
 '''
+    Element class is a container for image and type of it : line, word or char
+'''
+class Element:
+    def __init__(self, img, type='undef'):
+        self.image = img
+        self.type = type
+        self.width = self.image.shape[1]
+        self.height = self.image.shape[0]
+
+        # aici s-ar putea pune predictul
+        # (nu stiu daca e o idee prea buna sa incarcam modelul pentru un singur simbol dar disctuam)
+
+
+'''
     Status Image Analyser 
         - made to be inherited si specialised by build_lines and build_words
         - can add method for get char bounds
@@ -109,7 +123,7 @@ class LineBuilder(ImageAnalyser):
         ImageAnalyser.__init__(self, raw_img=raw_img)
         self.raw_image = raw_img
         self.bounds = self.__build_bounds()
-        # self.elements = self.build_elements()
+        self.elements = self.build_elements()
 
     #private method
     def __build_bounds(self):
@@ -119,19 +133,33 @@ class LineBuilder(ImageAnalyser):
 
         return bounds
 
-    def build_elements(self):
+    def build_elements(self, verbose=0):
         elements = list()
+        height_negative_space = 20
+
+        if verbose == 1:
+            print(">> Height of added negative space : " + str(height_negative_space))
 
         for elem in self.bounds:
 
             new_elem = self.raw_image[elem[0]:elem[1], :]
+            if verbose == 1:
+                print(">> Current raw elem shape " + str(new_elem.shape))
+            new_elem_np = self.__add_negative_space(new_elem, height_negative_space)
+            new_elem = Element(img=new_elem_np, type='line')
             elements.append(new_elem)
 
-        for img in elements:
-            ImageNormaliser.plotData(img)
+        return elements
 
-    def add_neagtive_space(self, elements):
-        pass
+    def __add_negative_space(self, element, height):
+
+        space = np.zeros((height, self.raw_image.shape[1]))
+        new_elem = np.vstack((space, element))
+        new_elem = np.vstack((new_elem, space))
+
+
+        return new_elem
+
 
 
 def test(img):
@@ -157,7 +185,10 @@ if __name__ == "__main__":
     image = image_norm(image)
 
     line_builder = LineBuilder(image)
-    line_builder.build_elements()
+    lines = line_builder.elements #array of line Elements
+
+    for i in lines:
+        ImageNormaliser.plotData(i.image)
 
     # print(line_builder.bounds)
 

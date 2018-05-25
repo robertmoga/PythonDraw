@@ -1,7 +1,9 @@
 
 function alertme(msg)
 {
+    console.log('>>JS merge');
     alert(msg);
+
 }
 
 function send()
@@ -17,7 +19,7 @@ function send()
 
 }
 
-
+console.log("hue");
 $( document ).ready(function() {
     $( "#submit_btn" ).click(function() {
 //  alert( "Handler for .click() called." );
