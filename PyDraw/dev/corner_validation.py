@@ -8,32 +8,78 @@ from data_to_letters import ImageNormaliser
 from data_to_letters import CharSynthesizer
 from data_to_letters import ImageAnalyser
 
-def check_sides(img, kernel):
-    # if img.shape[0] == kernel.shape[0] and kernel.shape[1] == kernel.shape[1]:
-    if img.shape == kernel.shape:
-        #produs
-        #verificare
+def check_corner(roi, kernel):
 
+    img = roi*kernel
+    sum_kernel = np.sum(kernel)
+    sum_img = int(np.sum(img)/255)
 
-def corner_dilation(img):
-    height, width = img.shape[0], img.shape[1]
-    print(str(height) + "  "+ str(width))
+    if sum_img > (sum_kernel*0.8):
+        return True
+    else:
+        return False
 
-    upper = img[:int(img.shape[0]*0.5),:]
-    print(upper.shape)
+def check_corner2(roi, kernel):
+    sum_kernel = np.sum(kernel)
+    img = kernel - roi
+    sum_img = int(np.sum(img))
+    if sum_img > sum_kernel:
+        sum_img = int(np.sum(img)/255)
 
-    kernel = np.ones((10, 10))
-    for i in range(upper.shape[0]):
-        for j in range(upper.shape[1]):
-            if i+20 < upper.shape[0] and j+20 < upper.shape[1]:
-                roi = upper[i:i+20, j:j+20]
-                check_sides(roi, kernel)
-                print(roi.shape)
-                break
+    if abs(sum_img) < (sum_kernel*0.5):
+        return True
+    else :
+        return False
 
-    # ImageNormaliser.plotData(upper)
+def corner_fill(raw):
+    height, width = raw.shape[0], raw.shape[1]
+    ks = 15 #kernel_size
+    left_kernel = def_corner(ks=ks)
+    right_kernel = def_corner(ks=ks, side='right')
+    temp = raw[:int(raw.shape[0]*0.5),:]
+    ImageNormaliser.plotData(temp)
+
+    if np.any(temp[:, :] == 200):
+        print("Avem 200 in temp")
+    for i in range(temp.shape[0]):
+        for j in range(temp.shape[1]):
+            if i+ks < temp.shape[0]-1 and j+ks < temp.shape[1]-1:
+                roi = temp[i:i+ks, j:j+ks]
+                if check_corner2(roi, left_kernel):
+                    raw[i:i+ks, j:j+ks] = np.ones((ks, ks))*200
+                if check_corner2(roi, right_kernel):
+                    raw[i:i+ks, j:j+ks] = np.ones((ks, ks))*200
+    if np.any(temp[:, :] == 200):
+        print(">>Avem 200 in temp")
+    ImageNormaliser.plotData(raw)
+    return raw
+
+def def_corner(ks=10, side='left'):
+    kernel = np.zeros((ks,ks))
+
+    if(side == 'left'):
+        for i in range(kernel.shape[0]):
+            for j in range(kernel.shape[1]):
+                if i == 0 or j == 0:
+                    kernel[i][j] = 1
+        return kernel
+    else:
+        for i in range(kernel.shape[0]):
+            for j in range(kernel.shape[1]):
+                if i == 0 or j == (kernel.shape[0]-1):
+                    kernel[i][j] = 1
+        return kernel
+
+def test():
+    a=5
+    b = a
+
+    b = 1
+
+    print(str(a) + "  " + str(b))
 
 if __name__ == "__main__":
+    print(">> Strat")
     obj = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
     image = obj.image
 
@@ -41,9 +87,13 @@ if __name__ == "__main__":
     img = norm.image
 
     #corner validation
-    corner_dilation(img)
+    img = corner_fill(img)
+    # test()
 
+    # ret, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+    #
     # analyser = ImageAnalyser(img)
+    # analyser.drawBounds()
     # char = CharSynthesizer(img, analyser.bounds)
     # letters = char.letters
     #

@@ -1,17 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>PyDraw - ML assist </title>
-</head>
-<body>
-    <h3> This is my first page </h3> <br /> <br />
 
-    {% if all_symbols %}
-        {% for sym in all_symbols %}
-            <p> {{ sym.user }}  {{ sym.predicted }} </p> <br />
+{% extends "draw/base.html" %}
+{% block content %}
+<br><br>
+<div class="row white">
+    <div class="large-12 columns">
+        <a href="/logout" class="right">Logout</a>
+        <h2>Hi, {{request.user.username}}</h2>
+    </div>
+</div>
+<div class="row white">
+    <div class="columns large-12">
+        <form action="draw/create_post/" method="POST" id="post-form">
+            {% csrf_token %}
+            <div class="fieldWrapper">
+                {{ form.text }}
+            </div>
+            <input type="submit" value="Post" class="tiny button" onclick="alertme('Hue')">
+        </form>
+    </div>
+</div>
 
-        {% endfor %}
-    {% endif %}
-</body>
-</html>
+<!-- The feed -->
+<div class="row white">
+    <div class="columns large-12">
+        <ul>
+            {% for post in all_posts %}
+                <li>
+                    <strong>{{ post.text }}</strong> -
+                    <em>{{ post.author }}</em> -
+                    <span>{{ post.created }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}

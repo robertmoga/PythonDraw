@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="{% static 'dev/util.js' %}"> </script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input type="button" value="test" onclick="alertme('JS functioneaza')">
+        <p>
+
+        {% csrf_token %}
+        <input type="text" id = "input_text">
+
+            <button  id="submit_btn" > Submit</button>
+        <br/><br/><br/>
+
+<div id = 'divul_meu'> </div>
+</body>
+</html>

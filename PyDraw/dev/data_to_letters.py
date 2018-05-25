@@ -93,8 +93,8 @@ class ImageNormaliser:
 
     def apply_processing(self):
         img = self.raw_image
-        img = self.thresholding(img)
         img = self.resize_percent(img, 50)
+        img = self.thresholding(img)
         img = self.find_contours(img)
         return img
 
@@ -569,7 +569,6 @@ def teste():
 '''
     VectorNormaliser class reduces all of the intermediate values between 0 and 255
     and also make the values int
-    
 '''
 class VectorNormaliser:
     def __init__(self, images):
@@ -587,7 +586,6 @@ class VectorNormaliser:
             self.images[i] = img
 
         return self.images
-
 
 class OutputWriter:
 
@@ -638,8 +636,8 @@ if __name__ == "__main__":
     char = CharSynthesizer(img, analyser.bounds)
     letters = char.letters
 
-    for elem in letters:
-        ImageNormaliser.plotData(elem, 'hue')
+    # for elem in letters:
+    #     ImageNormaliser.plotData(elem, 'hue')
 
     out_file_path = 'F:\Python\learn_keras\letters_from_pd\output1.txt'
 
