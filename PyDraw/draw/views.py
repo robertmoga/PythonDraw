@@ -15,42 +15,6 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Symbol.objects.all()
 
-def home(request):
-    pass
-    # tmpl_vars = {
-    #     'all_posts': Post.objects.reverse(),
-    #     'form': PostForm()
-    # }
-    # return render(request, 'draw/index.html', tmpl_vars)
-
-
-def create_post(request):
-    pass
-    # if request.method == 'POST':
-    #     post_text = request.POST.get('the_post')
-    #     response_data = {}
-    #
-    #     post = Post(text=post_text, author="Robert")
-    #     post.save()
-    #
-    #     response_data['result'] = 'Create post successful!'
-    #     response_data['postpk'] = post.pk
-    #     response_data['text'] = post.text
-    #     response_data['created'] = post.created.strftime('%B %d, %Y %I:%M %p')
-    #     response_data['author'] = "Robert"
-    #
-    #     # return HttpResponse(
-    #     #     json.dumps(response_data),
-    #     #     content_type="application/json")
-    #     # return HttpResponse("/draw")
-    #     return HttpResponseRedirect('/')
-    #
-    # else:
-    #     return HttpResponse(
-    #         json.dumps({"nothing to see": "this isn't happening"}),
-    #         content_type="application/json"
-    #     )
-
 
 def test(request):
 

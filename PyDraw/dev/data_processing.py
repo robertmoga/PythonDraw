@@ -147,6 +147,7 @@ class LineBuilder(ImageAnalyser):
 
         return bounds
 
+
     def build_elements(self, verbose=0):
         elements = list()
         height_negative_space = 20
@@ -189,12 +190,34 @@ class WordBuilder(ImageAnalyser):
 
         return bounds
 
+    @staticmethod
+    def __merge_bounds(elements, max_distance=10, verbose=0):
+        i = 0
+        while i < len(elements) - 1:
+            e1 = elements[i]
+            if i + 1 < len(elements):
+                e2 = elements[i + 1]
+
+                if abs(e2[0] - e1[1]) < max_distance:
+                    if verbose == 1:
+                        print(">> Merging bounds : " + str(e1) + " and " + str(e2))
+                    new_elem = (e1[0], e2[1])
+                    elements[i] = new_elem
+                    elements.pop(i + 1)
+                    i -= 1
+            i += 1
+        return elements
+
     def build_elements(self, verbose=0):
         elements = list()
         width_negative_space = 10
+        max_dist_allowed = 10
 
         if verbose == 1:
             print(">> Width of added negative space : " + str(width_negative_space))
+
+        if len(self.bounds) > 1:
+            self.bounds = self.__merge_bounds(self.bounds, max_dist_allowed, verbose)
 
         for elem in self.bounds:
 
@@ -216,21 +239,20 @@ class WordBuilder(ImageAnalyser):
 
 
 
-def test(img):
-    im2, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
-    cv2.fillPoly(img, contours, color=(255, 255, 255))
+def test():
+    pass
 
-    for cnt in contours:
-        # print(">>" + str(cnt))
-        rect = cv2.minAreaRect(cnt)
-        box = cv2.boxPoints(rect)
-        box = np.int0(box)
-        img = cv2.drawContours(img, [box], -1, (200, 0, 0), 2)
 
-    ImageNormaliser.plotData(img)
-    return img
+def get_elems(img):
 
+    line_builder = LineBuilder(img)
+    lines = line_builder.elements
+
+    for line in lines:
+        word_builder = WordBuilder(line.image)
+        words = word_builder.elements
+        for elem in words:
+            ImageNormaliser.plotData(elem.image)
 
 if __name__ == "__main__":
 
@@ -239,15 +261,7 @@ if __name__ == "__main__":
 
     image = image_norm(image)
 
-    line_builder = LineBuilder(image)
-    lines = line_builder.elements #array of line Elements
+    get_elems(image)
 
-    words = list()
-    for line in lines:
-        word_builder = WordBuilder(line.image)
-        words.append(word_builder.elements)
-
-    for line in words:
-        for word in line:
-            ImageNormaliser.plotData(word.image)
+    # test()
 
