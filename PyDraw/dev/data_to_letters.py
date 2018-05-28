@@ -295,19 +295,66 @@ class ImageAnalyser:
         img = self.raw_image
         height, width = img.shape[0], img.shape[1]
         img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+        # self.__get_mean_height()
 
         for y in self.bounds:
             for x in range(height):
                 img[x][y] = (0, 255, 0)
 
+        h = int(self.raw_image.shape[0] * 0.4)
+        print(str(self.raw_image.shape[0] ) + "   " + str(h))
+
+        for x in range(width):
+            img[h][x] = (0,255,0)
         norm = ImageNormaliser(self.raw_image)
         norm.plotData(img, winname="hue")
 
         return img
 
+    def __check_bound(self, bound, height_allowance):
+        pass
+        # height = self.raw_image.shape[0] * height_allowance
+        # for i in range(self.raw_image.shape[0]):
+        #     if self.raw_image[i][bound] > 0:
+        #         if i > height:
+        #             print(i)
+        #             return False
+        #         else:
+        #             return True
+    '''
+        Calculez mai bine inaltimea acceptata:
+            Calculez in 6 puncte, reprezentate de width*procent,
+            nivelul ce alb, si fac media lor,
+            inmultesc media cu un procent pentru a ridica inaltimea.
+            
+            Asta va fi pragul peste acre accept cross fara bound
+    '''
+
+    def __get_mean_height(self):
+        pass
+        # img = self.raw_image
+        # img = img[:, 10:-10]
+        # positions = [0.25, 0.40, 0.5, 0.60, 0.75]
+        # white_levels = list()
+        # for pos in positions:
+        #     white_levels.append(0)
+        #     j = int(img.shape[1]*pos)
+        #     for i in range(img.shape[0]):
+        #         if img[i][j] == 0:
+        #             white_levels[positions.index(pos)] += 1
+        # print(white_levels)
+
     def analyse_image(self):
+        # ImageNormaliser.plotData(self.image_morpho)
         white_values = self.get_histogram_values()
         bounds = self.get_boundaries_from_histogram(white_values)
+
+        # i = 0
+        # while i < len(bounds)-1:
+        #     if self.__check_bound(bounds[i], 0.4):
+        #         bounds.remove(bounds[i])
+        #         i -= 1
+        #     i += 1
 
         return bounds
 
@@ -345,6 +392,7 @@ class CharSynthesizer():
         if isinstance(value, list):
             self._letters = value
 
+
     def define_letters(self):
         height, width = self.image.shape[0], self.image.shape[1]
         bounds = self.bounds
@@ -361,16 +409,23 @@ class CharSynthesizer():
 
         return letters
 
-
+    #singura metoda apelabila
     def normalise_letters(self):
-        letters = self.define_letters()
+        letters = self.define_letters() #le imparte
         return_list = list()
-
+        # aici putem verifica procentul de alb din imagine si sa dam pop elementului respectiv
         for l in letters:
             try:
-                img = self.crop_letter(l)
+
+                img = self.crop_letter(l) # le face patrate si cu negative space
                 img = ImageNormaliser.resize_specific_dim(img, 64)
-                return_list.append(img)
+                #aici putem forma obiecte de tip element : FINDME
+
+                #check if the image has info or not
+                #in the case that theimage had less then 15% info, all of it was deleted
+                if np.count_nonzero(img > 0):
+                    ImageNormaliser.plotData(img)
+                    return_list.append(img)
             except Exception as e:
                 print(">> Exception during the iteration through letters " + str(e))
 
@@ -380,6 +435,7 @@ class CharSynthesizer():
     def crop_letter(self, img):
         im2, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         height, width = img.shape[0], img.shape[1]
+        #init the oy exterme coordinates for letter
         y_max = -1
         y_min = height + 1
         x_coords = list()
@@ -388,11 +444,11 @@ class CharSynthesizer():
 
         for i in contours:
             for j in i:
-                for elem in j:
+                for elem in j: #for every point in countour
                     y = elem[1]
                     x_coords.append(elem[0])
                     y_coords.append(elem[1])
-                    if y > y_max:
+                    if y > y_max: #define oy extremities
                         y_max = y
                     elif y < y_min:
                         y_min = y
@@ -400,14 +456,15 @@ class CharSynthesizer():
         if y_max > -1 and y_min < height+1:
             x_coords= np.array(x_coords)
             y_coords = np.array(y_coords)
-            x_distrib = x_coords.sum()/len(x_coords)
-            y_distrib = y_coords.sum()/len(y_coords)
+            x_distrib = x_coords.sum()/len(x_coords) #compute mean of the x coords
+            y_distrib = y_coords.sum()/len(y_coords) #compute mean of the y coords
             new_height = y_max - y_min
-            image = img[y_min: y_max, :]
+            image = img[y_min: y_max, :] #the letter touches all bounds of the image
 
+            #square the rectangle
             try:
                 if new_height > width:
-                    return_image = self.fill_letter_ox(image, x_distrib)
+                    return_image = self.fill_letter_ox(image, x_distrib) #get a square image
                     return_image = self.square_img(return_image)
                 elif width > new_height:
                     return_image = self.fill_letter_oy(image, y_distrib, height)
@@ -423,6 +480,7 @@ class CharSynthesizer():
 
         return return_image
 
+    # methods are returning a square image with centred letter based on info distribution
     @staticmethod
     def fill_letter_ox(image,x_distrib):
         direction = None
@@ -471,7 +529,7 @@ class CharSynthesizer():
         #treat the case where we need to add more fill lines that the actual image height
         #this way we overcome the isolation of the image
         try:
-            if val > height*0.7:
+            if val > height*0.7: #if the difference between width and height is big
                 fill_height = int(val/2)
                 if val % 2 == 0:
                     fill1 = np.zeros((fill_height, width))
@@ -507,7 +565,8 @@ class CharSynthesizer():
             # ImageNormaliser.plotData(im, "hue")
         return im
 
-
+    #method is computing information percent in order to eroad or not and adds
+    #negative space
     def square_img(self,char):
 
         img = char
@@ -515,7 +574,7 @@ class CharSynthesizer():
 
         black = np.count_nonzero(img == 0)
         white = np.count_nonzero(img > 0)
-        print(">> Black value " + str(black) + "  White value " + str(white))
+        # print(">> Black value " + str(black) + "  White value " + str(white))
 
         computed_percent = -1
         if black > white:
@@ -532,7 +591,8 @@ class CharSynthesizer():
                 val = int(img.shape[0] / 4) #discutabil
                 img = self.add_negative_space(img, val)
             else:
-                pass
+                # fill the image with zeros, in case of having less than 15% info
+                img = np.zeros(img.shape)
 
         # ImageNormaliser.plotData(img, "char")
 
@@ -623,28 +683,29 @@ class OutputWriter:
 
 if __name__ == "__main__":
 
-    obj = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
+    obj = DataToImage("tempFiles/fis1.txt", "tempFiles/newImage.png")
     image = obj.image
 
     norm = ImageNormaliser(image)
     img = norm.image
 
     analyser = ImageAnalyser(img)
-    # im2 = analyser.drawBounds()
-
+    print(">> " + str(analyser.bounds))
+    im2 = analyser.drawBounds()
+    ImageNormaliser.plotData(im2)
     char = CharSynthesizer(img, analyser.bounds)
     letters = char.letters
 
     for elem in letters:
         ImageNormaliser.plotData(elem, 'hue')
-
-    out_file_path = 'D:\Python\learn_keras\letters_from_pd\output1.txt'
-
-    out_norm = VectorNormaliser(letters)
-    letters = out_norm.normalise()
-
-    ow = OutputWriter(letters, out_file_path)
-    ow.init_output_file()
-    ow.write()
+    #
+    # out_file_path = 'F:\Python\learn_keras\letters_from_pd\output1.txt'
+    #
+    # out_norm = VectorNormaliser(letters)
+    # letters = out_norm.normalise()
+    #
+    # ow = OutputWriter(letters, out_file_path)
+    # ow.init_output_file()
+    # ow.write()
     # teste()
 
