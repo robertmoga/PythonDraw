@@ -9,7 +9,7 @@ from django.http import JsonResponse
 
 
 class IndexView(generic.ListView):
-    template_name = 'draw/index.html'
+    template_name = 'draw/indexTemp.html'
     context_object_name = 'all_symbols'
 
     def get_queryset(self):
@@ -31,5 +31,7 @@ def test2(request):
     data['info'] = info
     #procesare de imagine
     #output imagini pe disc
+
+
     return JsonResponse(data, safe=False)
 

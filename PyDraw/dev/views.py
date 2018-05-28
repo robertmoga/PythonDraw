@@ -1,28 +1,45 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views import generic
 import sys
-from django.views.decorators.csrf import csrf_exempt, csrf_protect, requires_csrf_token
-from django.core.files.uploadedfile import SimpleUploadedFile
 import os
-import cv2
 import base64
+from django.views.decorators.csrf import csrf_exempt
+import cv2
+from django.http import JsonResponse
+from .data_to_letters import ImageNormaliser
+from PIL import Image
 
 globalData = []
 globalData.append("PyDraw Dev 1.0")
 NEW_DATASET = 'pd_dataset'
 
+def IndexView(request):
+    return render(request, 'dev/index.html')
 
-class IndexView(generic.TemplateView):
-    template_name = 'dev/index.html'
-    sys.stderr.write(">> Dev index accessed \n")
+def IndexProcessing(request):
+    info = None
+    if request.method == 'GET':
+        info = request.GET.get('info')
+        info = info[:21]
+        print(">> " + str(info))
+    data = dict()
+    data['info'] = info
 
+    with open("dev/tempFiles/newImage.png", "rb") as imageFile:
+        string = base64.b64encode(imageFile.read())
+    part1 = 'data:image/png;base64, '
+    base64_str = string.decode("utf-8")
+    result = part1 + str(base64_str)
+    data['img'] = str(result)
+    # procesare de imagine
+    # output imagini pe disc
+    return JsonResponse(data, safe=False)
 
 @csrf_exempt
 def IndexTemp(request):
     sys.stderr.write(">> TEMP INDEX ACCESSED \n")
     if request.method == 'GET':
-        return render(request, 'dev/index.html')
+        return render(request, 'dev/indexTemp.html')
     elif request.method == 'POST':
         data = request.POST.get('data')
         print(">> IMG DATA : " + str(data[:10]))
@@ -60,8 +77,8 @@ def BuildDataSet(request):
         print(">>  Data recieved : " + str(imageLabel) + "   " + str(imageData[:21]))
         save_images_dataset(imageData, imageLabel)
 
-
         return HttpResponseRedirect('/')
+
 
 @csrf_exempt
 def test2View(request):

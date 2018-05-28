@@ -5,7 +5,9 @@ app_name = 'dev'
 
 urlpatterns = [
     # #/dev/
-    url(r'^$', views.IndexTemp),
+    url(r'^old/$', views.IndexTemp),
+    url(r'^$', views.IndexView),
+    url(r'^process/$', views.IndexProcessing),
     url(r'^test/$', views.testView),
     url(r'^test2/$', views.test2View),
     url(r'^build/$', views.BuildDataSet)

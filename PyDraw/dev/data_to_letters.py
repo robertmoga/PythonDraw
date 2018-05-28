@@ -123,6 +123,10 @@ class ImageNormaliser:
         self._image = self.image
 
     @staticmethod
+    def hue():
+        print(">> Sa mori tu")
+
+    @staticmethod
     def plotData(image, winname="win"):
 
         cv2.namedWindow(winname)  # Create a named window
@@ -613,18 +617,10 @@ class CharSynthesizer():
         return img
 
 def teste():
-
-    a = np.ones((1, 10))
-    b = np.ones((1,4))
-    c = np.zeros((1,6))
-
-    hue = np.hstack((a, c))
-    hue = np.hstack((hue, b))
-
-    # print(hue)
-
-    val = np.count_nonzero(hue == 0)
-    print(val)
+    img = cv2.imread('tempFiles/newImage.png', cv2.IMREAD_GRAYSCALE)
+    print(" >>> Imaginea mea : " + str(img))
+    # img = ImageNormaliser.resize_percent(img, 50)
+    # ImageNormaliser.plotData(img)
 
 '''
     VectorNormaliser class reduces all of the intermediate values between 0 and 255
@@ -683,21 +679,21 @@ class OutputWriter:
 
 if __name__ == "__main__":
 
-    obj = DataToImage("tempFiles/fis1.txt", "tempFiles/newImage.png")
-    image = obj.image
-
-    norm = ImageNormaliser(image)
-    img = norm.image
-
-    analyser = ImageAnalyser(img)
-    print(">> " + str(analyser.bounds))
-    im2 = analyser.drawBounds()
-    ImageNormaliser.plotData(im2)
-    char = CharSynthesizer(img, analyser.bounds)
-    letters = char.letters
-
-    for elem in letters:
-        ImageNormaliser.plotData(elem, 'hue')
+    # obj = DataToImage("tempFiles/fis1.txt", "tempFiles/newImage.png")
+    # image = obj.image
+    #
+    # norm = ImageNormaliser(image)
+    # img = norm.image
+    #
+    # analyser = ImageAnalyser(img)
+    # print(">> " + str(analyser.bounds))
+    # im2 = analyser.drawBounds()
+    # ImageNormaliser.plotData(im2)
+    # char = CharSynthesizer(img, analyser.bounds)
+    # letters = char.letters
+    #
+    # for elem in letters:
+    #     ImageNormaliser.plotData(elem, 'hue')
     #
     # out_file_path = 'F:\Python\learn_keras\letters_from_pd\output1.txt'
     #
@@ -707,5 +703,5 @@ if __name__ == "__main__":
     # ow = OutputWriter(letters, out_file_path)
     # ow.init_output_file()
     # ow.write()
-    # teste()
+    teste()
 

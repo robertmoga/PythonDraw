@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="{% static 'dev/styleIndexTemp.css' %}"/>
+    <script src="{% static 'dev/util.js' %}"> </script>
+
+    <title>PyDraw Dev</title>
+</head>
+<body style="margin: 0"  onload="initColors()">
+
+        <div id="toolbar">
+            <div id="rad">
+                Radius <span id="radval">7</span>
+                <div id = "decreaseRad" class="radcontrol">-</div>
+                <div id = "increaseRad" class="radcontrol">+</div>
+            </div>
+
+            <div id="sendBtn" class="btn">
+                Send to Server</div>
+            <div id="clearBtn" class="btn">
+                    Clear</div>
+
+            <div id="colors">
+            </div>
+
+        </div>
+        <div id="test"></div>
+
+
+        <canvas id="canvas" style="display: block;">
+            Sorry, your browser needs an update
+        </canvas>
+
+        <script src="{% static 'dev/mainIndex.js' %}"> </script>
+        <script src="{% static 'dev/radius.js' %}"></script>
+        <script src="{% static 'dev/colors.js' %}"></script>
+        <script src="{% static 'dev/save.js' %}"></script>
+    </body>
+</html>
