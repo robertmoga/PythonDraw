@@ -531,7 +531,7 @@ class CharSynthesizer:
         computed_percent = -1
         if black > white:
             computed_percent = int((white * 100)/ black)
-        print(computed_percent)
+        # print(computed_percent)
         if computed_percent > -1:
             if computed_percent > 35:
                 kernel = np.ones((2, 2))
@@ -549,7 +549,7 @@ class CharSynthesizer:
                 black = np.count_nonzero(temp == 0)
                 white = np.count_nonzero(temp > 0)
                 computed_percent = int((white * 100) / black)
-                print(">> Second time computed info percent : " + str(computed_percent))
+                # print(">> Second time computed info percent : " + str(computed_percent))
                 # ImageNormaliser.plotData(img)
                 if computed_percent < 10:
                     # fill the image with zeros, in case of having less than 10% info
@@ -590,22 +590,44 @@ class OutputBuilder:
         ImageNormaliser.plotData(img)
 
         initial_elem = Element(img)
-
+        names_list = list()
         line_builder = LineBuilder(initial_elem)
         lines = line_builder.elements
+
+        line_index = 1
 
         for line in lines:
             word_builder = WordBuilder(line)
             words = word_builder.elements
-            ImageNormaliser.plotData(line.image)
+            l_name = '_'+str(line_index)+'.png'
+            # l_name = 'line_'+str(line_index)
+            names_list.append(l_name)
+            # print(l_name)
+            # ImageNormaliser.plotData(line.image)
+            word_index = 1
             for word in words:
-                ImageNormaliser.plotData(word.image)
+                w_name = l_name+'_' + str(word_index)+'.png'
+                names_list.append(w_name)
 
+                # w_name = l_name+'_word_' + str(word_index)
+                # print(w_name)
+                # ImageNormaliser.plotData(word.image)
                 char_builder = CharBuilder(word)
                 chars = char_builder.elements
+                char_index = 1
                 for char in chars:
-                    ImageNormaliser.plotData(char.image)
+                    c_name = w_name + '_' + str(char_index)+'.png'
+                    names_list.append(c_name)
+                    # c_name = w_name + '_char_' + str(char_index)
+                    # print(c_name)
+                    # ImageNormaliser.plotData(char.image)
+                    char_index += 1
+                word_index += 1
+            line_index += 1
 
+        for name in names_list:
+            arr = name.split('_.')
+            print(arr)
 
 
     def _get_raw_image(self):

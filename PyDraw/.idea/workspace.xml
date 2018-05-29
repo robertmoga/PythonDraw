@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7550d10d-2fd4-404a-9135-42a0828a1280" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dev/InputProcessing.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/data_processing.py" afterPath="$PROJECT_DIR$/dev/data_processing.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/static/dev/imageLoad.html" afterPath="$PROJECT_DIR$/dev/static/dev/imageLoad.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev/views.py" afterPath="$PROJECT_DIR$/dev/views.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dev/corner_validation.py" afterPath="$PROJECT_DIR$/dev/tempFiles/corner_validation.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dev/hue.jpg" afterPath="$PROJECT_DIR$/dev/tempFiles/hue.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/dev/processing_data.py" afterPath="$PROJECT_DIR$/dev/tempFiles/processing_data.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,8 +36,8 @@
       <file leaf-file-name="data_processing.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dev/data_processing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="602" column="0" lean-forward="true" selection-start-line="602" selection-start-column="0" selection-end-line="602" selection-end-column="0" />
+            <state relative-caret-position="294">
+              <caret line="629" column="22" lean-forward="true" selection-start-line="629" selection-start-column="22" selection-end-line="629" selection-end-column="22" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#989#5736#0" expanded="false" />
@@ -51,7 +45,10 @@
                 <element signature="e#5776#7077#0" expanded="false" />
                 <element signature="e#7118#9151#0" expanded="false" />
                 <element signature="e#9193#11907#0" expanded="false" />
-                <element signature="e#11937#19669#0" expanded="false" />
+                <element signature="e#11937#19673#0" expanded="false" />
+                <element signature="e#21367#21556#0" expanded="false" />
+                <element signature="e#21579#21826#0" expanded="false" />
+                <element signature="e#21853#22403#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -130,7 +127,6 @@
       <find>draw_post</find>
       <find>plotData</find>
       <find>hstack</find>
-      <find>print</find>
       <find>Char shape</find>
       <find>thre</find>
       <find>-1</find>
@@ -139,6 +135,7 @@
       <find>threshold</find>
       <find>imageName</find>
       <find>image_norm</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -523,7 +520,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527499436857</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Mid dev of OutputBuilder, a class that writes to disk individual png images for every element in specific directories, in order to be crawled and outputed to JS file.">
+      <created>1527600758943</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1527600758943</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -587,7 +591,8 @@
     <MESSAGE value="Finished line segmentation. Started dev of word segmentation" />
     <MESSAGE value="Added element merging in WordBuilder" />
     <MESSAGE value="Added to data_processing all the classes and logic for segmentation. Although the char segmentation is poor." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added to data_processing all the classes and logic for segmentation. Although the char segmentation is poor." />
+    <MESSAGE value="Mid dev of OutputBuilder, a class that writes to disk individual png images for every element in specific directories, in order to be crawled and outputed to JS file." />
+    <option name="LAST_COMMIT_MESSAGE" value="Mid dev of OutputBuilder, a class that writes to disk individual png images for every element in specific directories, in order to be crawled and outputed to JS file." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -991,8 +996,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dev/data_processing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="602" column="0" lean-forward="true" selection-start-line="602" selection-start-column="0" selection-end-line="602" selection-end-column="0" />
+        <state relative-caret-position="294">
+          <caret line="629" column="22" lean-forward="true" selection-start-line="629" selection-start-column="22" selection-end-line="629" selection-end-column="22" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#989#5736#0" expanded="false" />
@@ -1000,7 +1005,10 @@
             <element signature="e#5776#7077#0" expanded="false" />
             <element signature="e#7118#9151#0" expanded="false" />
             <element signature="e#9193#11907#0" expanded="false" />
-            <element signature="e#11937#19669#0" expanded="false" />
+            <element signature="e#11937#19673#0" expanded="false" />
+            <element signature="e#21367#21556#0" expanded="false" />
+            <element signature="e#21579#21826#0" expanded="false" />
+            <element signature="e#21853#22403#0" expanded="false" />
           </folding>
         </state>
       </provider>
