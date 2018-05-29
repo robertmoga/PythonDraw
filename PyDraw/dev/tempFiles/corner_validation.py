@@ -3,10 +3,10 @@ import base64
 import numpy as np
 import time
 import os
-from data_to_letters import DataToImage
-from data_to_letters import ImageNormaliser
-from data_to_letters import CharSynthesizer
-from data_to_letters import ImageAnalyser
+from dev.data_to_letters import DataToImage
+from dev.data_to_letters import ImageNormaliser
+from dev.data_to_letters import CharSynthesizer
+from dev.data_to_letters import ImageAnalyser
 
 def check_corner(roi, kernel):
 

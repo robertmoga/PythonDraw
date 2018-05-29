@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
-from data_to_letters import DataToImage
+# from data_to_letters import DataToImage
 from data_to_letters import ImageNormaliser
-
+from InputProcessing import DataToImage
+import os
 
 def image_norm(img):
     img = ImageNormaliser.resize_percent(img, 40)
@@ -578,6 +579,43 @@ class CharSynthesizer:
 
         return img
 
+class OutputBuilder:
+    def __init__(self, path):
+        self.path = path
+        self.raw_img = self._get_raw_image()
+
+    def build_images(self):
+
+        img = self.raw_img
+        ImageNormaliser.plotData(img)
+
+        initial_elem = Element(img)
+
+        line_builder = LineBuilder(initial_elem)
+        lines = line_builder.elements
+
+        for line in lines:
+            word_builder = WordBuilder(line)
+            words = word_builder.elements
+            ImageNormaliser.plotData(line.image)
+            for word in words:
+                ImageNormaliser.plotData(word.image)
+
+                char_builder = CharBuilder(word)
+                chars = char_builder.elements
+                for char in chars:
+                    ImageNormaliser.plotData(char.image)
+
+
+
+    def _get_raw_image(self):
+        data_reader = DataToImage(self.path)
+        img = data_reader.image
+        img = ImageNormaliser.resize_percent(img, 40)
+        img = ImageNormaliser.thresholding(img)
+        return img
+
+
 
 def test(img):
     line_builder = LineBuilder(img)
@@ -613,10 +651,18 @@ def get_elems(img):
 
 if __name__ == "__main__":
 
-    data_reader = DataToImage("tempFiles/fis2.txt", "tempFiles/newImage.png")
-    image = data_reader.image
+    # data_reader = DataToImage("tempFiles/fis2.txt", "tempFiles/newImage.png")
+    # image = data_reader.image
 
-    image = image_norm(image)
-    get_elems(image)
+    name = 'vala'
+    path = str(os.getcwd()) + '\\temporary\\' + name
+
+
+    ir = OutputBuilder(path)
+    ir.build_images()
+
+
+    # image = image_norm(image)
+    # get_elems(image)
     # test(image)
 

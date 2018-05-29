@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 import cv2
 from django.http import JsonResponse
 from .data_to_letters import ImageNormaliser
-from PIL import Image
+from .InputProcessing import DataToImage, InputFormatting
 
 globalData = []
 globalData.append("PyDraw Dev 1.0")
@@ -20,19 +20,24 @@ def IndexProcessing(request):
     info = None
     if request.method == 'GET':
         info = request.GET.get('info')
-        info = info[:21]
-        print(">> " + str(info))
+        info = info
+        # print(">> " + str(info))
     data = dict()
-    data['info'] = info
+    # data['info'] = info
 
-    with open("dev/tempFiles/newImage.png", "rb") as imageFile:
-        string = base64.b64encode(imageFile.read())
-    part1 = 'data:image/png;base64, '
-    base64_str = string.decode("utf-8")
-    result = part1 + str(base64_str)
-    data['img'] = str(result)
-    # procesare de imagine
-    # output imagini pe disc
+    #name generator
+    name = 'vala'
+    path = str(os.getcwd()) + '\\dev\\temporary\\' + name
+    # in_form = InputFormatting(path, info)
+    data_reader = DataToImage(path)
+    img = data_reader.image
+    # img = ImageNormaliser.thresholding(img)
+    # with img we ar doing processing
+    img_path = data_reader.imageName
+    b64 = InputFormatting.png_to_base64(img_path)
+
+    data['img'] = str(b64)
+
     return JsonResponse(data, safe=False)
 
 @csrf_exempt
@@ -43,6 +48,7 @@ def IndexTemp(request):
     elif request.method == 'POST':
         data = request.POST.get('data')
         print(">> IMG DATA : " + str(data[:10]))
+
         try:
             f = open('dev/tempFiles/fis.txt', 'w')
             f.write(data)
@@ -162,8 +168,22 @@ def save_base64_to_img(data, path):
         fh.close()
 
 
-def test_file(path):
-    with open(path, 'r') as f:
-        temp = f.read()
-        print(">> Test read : " + temp)
-        f.close()
+# def test_read_bin_img(path):
+#     # with open(path, "rb") as imageFile:
+#     with open("dev/tempFiles/newImage.png", "rb") as imageFile:
+#         string = base64.b64encode(imageFile.read())
+#     part1 = 'data:image/png;base64, '
+#     base64_str = string.decode("utf-8")
+#     result = part1 + str(base64_str)
+#     return result
+#
+#
+# def png_to_base64(path):
+#
+#     with open(path, "rb") as imageFile:
+#         string = base64.b64encode(imageFile.read())
+#     part1 = 'data:image/png;base64, '
+#     base64_str = string.decode("utf-8")
+#     result = part1 + str(base64_str)
+#     print(result[:10])
+#     return result
