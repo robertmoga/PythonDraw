@@ -46,7 +46,7 @@ class InputFormatting:
         part1 = 'data:image/png;base64, '
         base64_str = string.decode("utf-8")
         result = part1 + str(base64_str)
-        print(result[:10])
+        # print(result[:10])
         return result
 
 
@@ -137,7 +137,6 @@ def test():
     base64_str = string.decode("utf-8")
     result = part1 + str(base64_str)
     print(result[:10])
-
 if __name__ == "__main__":
     # name = "xvx"
     # data = "ahaa"

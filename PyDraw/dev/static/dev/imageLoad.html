@@ -1,34 +1,21 @@
 <html>
-<h2> Test imagine </h2>
+        <script language="javascript" type="text/javascript">
+            console.log(">>Start");
+            
+            obj = {"hue":"canta", "bahue":"fanfara" , "ahue" : "militara" };
+            var keys = Object.keys(obj);
 
-    <script langauge="javascript"> 
-        // alert("hue");
-        
+            document.write(keys[0]);
+            document.write(obj.hue);
 
-        var openFile = function(event) {
-            var input = event.target;
-    
-            var reader = new FileReader();
-            reader.onload = function(){
-              var text = reader.result;
-              var node = document.getElementById('output');
-              node.innerText = text;
-              console.log(reader.result.substring(0, 200));
-            };
-            reader.readAsText(input.files[0]);
-          };
+        </script>
+<body>
+    <h2> Test imagine </h2>
 
-        var path = 'file:///D:/_licenta/PythonDraw/PyDraw/dev/temporary/vala/raw_img.png';
-        // path = readTextFile("F:\\s_Licenta\\PythonDraw\\PyDraw\\dev\\tempFiles\\fis1.txt");
-        document.write("hue");
-        var image = document.createElement("img");
-        image.src = path;
-        document.body.appendChild(image);
 
-    </script>
 
-<div>
+    <div>
+</body>
+</div>
 
-</div> 
-</html>    
-
+</html>

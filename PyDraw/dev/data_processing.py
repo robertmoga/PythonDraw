@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
-# from data_to_letters import DataToImage
-from data_to_letters import ImageNormaliser
-from InputProcessing import DataToImage
+from .InputProcessing import DataToImage, InputFormatting
+from .data_to_letters import ImageNormaliser
 import os
+import re
 
 def image_norm(img):
     img = ImageNormaliser.resize_percent(img, 40)
@@ -583,11 +583,12 @@ class OutputBuilder:
     def __init__(self, path):
         self.path = path
         self.raw_img = self._get_raw_image()
+        # print(self.path)
 
     def build_images(self):
 
         img = self.raw_img
-        ImageNormaliser.plotData(img)
+        # ImageNormaliser.plotData(img)
 
         initial_elem = Element(img)
         names_list = list()
@@ -599,36 +600,31 @@ class OutputBuilder:
         for line in lines:
             word_builder = WordBuilder(line)
             words = word_builder.elements
-            l_name = '_'+str(line_index)+'.png'
-            # l_name = 'line_'+str(line_index)
-            names_list.append(l_name)
-            # print(l_name)
-            # ImageNormaliser.plotData(line.image)
+            l_name = '_'+str(line_index)
+            line_path = self.path+"\\lines\\"+l_name+".png"
+            cv2.imwrite(line_path, line.image)
+            names_list.append(line_path)
             word_index = 1
             for word in words:
-                w_name = l_name+'_' + str(word_index)+'.png'
-                names_list.append(w_name)
-
-                # w_name = l_name+'_word_' + str(word_index)
-                # print(w_name)
-                # ImageNormaliser.plotData(word.image)
+                w_name = l_name+'_' + str(word_index)
+                word_path = self.path+"\\words\\"+w_name+".png"
+                cv2.imwrite(word_path, word.image)
+                names_list.append(word_path)
                 char_builder = CharBuilder(word)
                 chars = char_builder.elements
                 char_index = 1
                 for char in chars:
-                    c_name = w_name + '_' + str(char_index)+'.png'
-                    names_list.append(c_name)
-                    # c_name = w_name + '_char_' + str(char_index)
-                    # print(c_name)
-                    # ImageNormaliser.plotData(char.image)
+                    c_name = w_name + '_' + str(char_index)
+                    char_path = self.path+"\\chars\\"+c_name+'.png'
+                    cv2.imwrite(char_path, char.image)
+                    names_list.append(char_path)
                     char_index += 1
                 word_index += 1
             line_index += 1
 
-        for name in names_list:
-            arr = name.split('_.')
-            print(arr)
-
+        # for name in names_list:
+        #     arr = re.split('\\\|\.', name)
+        #     print(str(name) + "    " + str(arr[-2]))
 
     def _get_raw_image(self):
         data_reader = DataToImage(self.path)
@@ -637,7 +633,21 @@ class OutputBuilder:
         img = ImageNormaliser.thresholding(img)
         return img
 
+    def build_output_dict(self):
+        result = dict()
+        count = 0
+        dirs = [self.path + "\\" + 'lines',
+        self.path + "\\" + 'words',
+        self.path + "\\" + 'chars']
 
+        for curr_dir in dirs:
+            for img in os.listdir(curr_dir):
+                splitedArray = re.split('\\\|\.', img)
+                temp = InputFormatting.png_to_base64(curr_dir+"\\"+img)
+                result[splitedArray[-2]] = temp
+                count += 1
+        result['noElem'] = count
+        return result
 
 def test(img):
     line_builder = LineBuilder(img)
@@ -681,8 +691,16 @@ if __name__ == "__main__":
 
 
     ir = OutputBuilder(path)
-    ir.build_images()
+    # ir.build_images()
+    res = ir.build_output_dict()
 
+    for k, v in res.items():
+        print(str(k) + "   " + str(v))
+
+    # s = "1_2_3.png"
+    # a = "_1.png"
+    # arr = re.split('\.', s)
+    # print(arr)
 
     # image = image_norm(image)
     # get_elems(image)

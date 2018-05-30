@@ -1,44 +1,39 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-import sys
-import os
 import base64
-from django.views.decorators.csrf import csrf_exempt
-import cv2
+import os
+import sys
+
+from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from .data_to_letters import ImageNormaliser
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
 from .InputProcessing import DataToImage, InputFormatting
+from .data_processing import OutputBuilder
 
 globalData = []
 globalData.append("PyDraw Dev 1.0")
 NEW_DATASET = 'pd_dataset'
 
+
 def IndexView(request):
     return render(request, 'dev/index.html')
 
 def IndexProcessing(request):
-    info = None
+    imgData = None
     if request.method == 'GET':
-        info = request.GET.get('info')
-        info = info
-        # print(">> " + str(info))
-    data = dict()
-    # data['info'] = info
+        imgData = request.GET.get('info')
 
-    #name generator
+    # name generator
     name = 'vala'
     path = str(os.getcwd()) + '\\dev\\temporary\\' + name
-    # in_form = InputFormatting(path, info)
+    in_form = InputFormatting(path, imgData)
     data_reader = DataToImage(path)
-    img = data_reader.image
-    # img = ImageNormaliser.thresholding(img)
-    # with img we ar doing processing
-    img_path = data_reader.imageName
-    b64 = InputFormatting.png_to_base64(img_path)
+    out_build = OutputBuilder(path)
+    out_build.build_images()
+    res = out_build.build_output_dict()
 
-    data['img'] = str(b64)
+    return JsonResponse(res, safe=False)
 
-    return JsonResponse(data, safe=False)
 
 @csrf_exempt
 def IndexTemp(request):
@@ -57,7 +52,6 @@ def IndexTemp(request):
             print(">> Eroare la scriere in buffer din /dev : " + str(e))
         return HttpResponseRedirect('/')
 
-
 @csrf_exempt
 def testView(request):
     if request.method == 'GET':
@@ -70,7 +64,6 @@ def testView(request):
         print(">> Client msg : " + str(data))
         globalData.append(data)
         return HttpResponseRedirect('/')
-
 
 @csrf_exempt
 def BuildDataSet(request):
@@ -85,14 +78,13 @@ def BuildDataSet(request):
 
         return HttpResponseRedirect('/')
 
-
 @csrf_exempt
 def test2View(request):
     temp = len(globalData)
     context = {'info': globalData, 'len': temp}
     return render(request, 'dev/test.html', context)
 
-#method that writes into files and keeps track of the dataset
+# method that writes into files and keeps track of the dataset
 def save_images_dataset(imageData, imageLabel):
     INDEX_DOC = NEW_DATASET + "/index.txt"
     BUFFER_DOC = NEW_DATASET + "/buff.txt"
@@ -116,8 +108,6 @@ def save_images_dataset(imageData, imageLabel):
             f.close()
     except Exception as e:
         print(" >> Eroare la citire din buffer " + str(e))
-
-    test_file(BUFFER_DOC)
 
     # build name for the new image
 
@@ -158,7 +148,6 @@ def partition(strOne):
     else:
         return strOne
 
-
 def save_base64_to_img(data, path):
     base64_str = partition(data)
     binary_str = base64.b64decode(base64_str)
@@ -166,7 +155,6 @@ def save_base64_to_img(data, path):
     with open(path, "wb") as fh:
         fh.write(binary_str)
         fh.close()
-
 
 # def test_read_bin_img(path):
 #     # with open(path, "rb") as imageFile:
