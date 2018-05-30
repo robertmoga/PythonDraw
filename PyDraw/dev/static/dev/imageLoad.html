@@ -1,21 +1,121 @@
 <html>
-        <script language="javascript" type="text/javascript">
-            console.log(">>Start");
-            
-            obj = {"hue":"canta", "bahue":"fanfara" , "ahue" : "militara" };
-            var keys = Object.keys(obj);
 
-            document.write(keys[0]);
-            document.write(obj.hue);
-
-        </script>
 <body>
     <h2> Test imagine </h2>
 
-
-
-    <div>
+    <div id="source">
+    </div>
 </body>
-</div>
+
 
 </html>
+
+<script language="javascript" type="text/javascript">
+    obj = {
+        "_1": "ana are",
+        "_1_1": "ana",
+        "_1_1_1": "a", "_1_1_2": "n", "_1_1_3": "a",
+        "_1_2": "are",
+        "_1_2_1": "a", "_1_2_2": "r", "_1_2_3": "e",
+        "_2_1" : "mere"
+    };
+
+    var keys = Object.keys(obj);
+    var values = Object.values(obj)
+    s = keys[0];
+    // document.write(obj[s]);
+    var container = document.getElementById("source")
+    toggle = 'lines'
+
+    if (toggle == 'words') {
+        for (var i = 0; i < keys.length; i++) {
+            var word_cont = document.createElement("div");
+
+            console.log("Iteratia : " + i);
+
+            if (keys[i].length == 4) {
+                var word = document.createElement("div");
+                word.className = "word"
+                var text = document.createTextNode(obj[keys[i]]); // astea doua linii sunt inlocuite de src 
+                word.appendChild(text);
+                word_cont.appendChild(word)
+
+                console.log(i + "  " + keys[i]);
+
+                ok = 0;
+                i++;
+                while (keys[i].length == 6) {
+                    ok = 1;
+                    console.log(">>" + i + " " + keys[i]);
+                    var char = document.createElement("div");
+                    char.className = "char";
+                    var text = document.createTextNode(obj[keys[i]])
+                    char.appendChild(text);
+                    word_cont.appendChild(char);
+
+                    if (typeof keys[i + 1] === 'undefined') {
+                        console.log("Urmatorul nu exista");
+                        ok = 0;
+                        break;
+                    }
+                    else {
+                        i++;
+                    }
+                }
+                console.log("Inainte de ok : " + i);
+                if (ok == 1) { i--; }
+                console.log("Dupa ok : " + i);
+            }
+
+            container.appendChild(word_cont);
+        }
+    }
+
+
+    if (toggle == 'lines') {
+        for (var i = 0; i < keys.length; i++) {
+            var line_cont = document.createElement("div");
+
+            console.log("Iteratia : " + i);
+
+            if (keys[i].length == 2) {
+                var line = document.createElement("div");
+                line.className = "line"
+                var text = document.createTextNode(obj[keys[i]]); // astea doua linii sunt inlocuite de src 
+                line.appendChild(text);
+                line_cont.appendChild(line)
+
+                console.log(i + "  " + keys[i]);
+
+                ok = 0;
+                i++;
+                while (i < keys.length) {
+                    if (keys[i].length == 4) {
+                        ok = 1;
+                        console.log(">>" + i + " " + keys[i]);
+                        var word = document.createElement("div");
+                        word.className = "word";
+                        var text = document.createTextNode(obj[keys[i]])
+                        word.appendChild(text);
+                        line_cont.appendChild(word);
+                    }
+
+                    if (typeof keys[i + 1] === 'undefined') {
+                            console.log("Urmatorul nu exista");
+                            ok = 0;
+                            break;
+                        }
+                        else {
+                            i++;
+                        }
+                }
+                console.log("Inainte de ok : " + i);
+                if (ok == 1) { i--; }
+                console.log("Dupa ok : " + i);
+            }
+
+            container.appendChild(line_cont);
+        }
+    }
+
+</script>

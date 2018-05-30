@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7550d10d-2fd4-404a-9135-42a0828a1280" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/dev/static/dev/index/indexOptions.js" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/dev/InputProcessing.py" afterPath="$PROJECT_DIR$/dev/InputProcessing.py" />
-      <change beforePath="$PROJECT_DIR$/dev/data_processing.py" afterPath="$PROJECT_DIR$/dev/data_processing.py" />
       <change beforePath="$PROJECT_DIR$/dev/static/dev/imageLoad.html" afterPath="$PROJECT_DIR$/dev/static/dev/imageLoad.html" />
-      <change beforePath="$PROJECT_DIR$/dev/views.py" afterPath="$PROJECT_DIR$/dev/views.py" />
+      <change beforePath="$PROJECT_DIR$/dev/static/dev/index/indexColors.js" afterPath="$PROJECT_DIR$/dev/static/dev/index/indexColors.js" />
+      <change beforePath="$PROJECT_DIR$/dev/static/dev/index/styleIndex.css" afterPath="$PROJECT_DIR$/dev/static/dev/index/styleIndex.css" />
+      <change beforePath="$PROJECT_DIR$/dev/templates/dev/index.html" afterPath="$PROJECT_DIR$/dev/templates/dev/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,97 +18,52 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dev/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
-              <folding>
-                <element signature="e#1507#1869#0" expanded="false" />
-                <element signature="e#1915#2354#0" expanded="false" />
-                <element signature="e#2637#4247#0" expanded="false" />
-                <element signature="e#4331#4502#0" expanded="false" />
-                <element signature="e#4544#4700#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="imageLoad.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/dev/static/dev/imageLoad.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="20" column="7" lean-forward="true" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="indexSave.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexSave.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data_to_letters.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dev/data_to_letters.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-701">
-              <caret line="619" column="67" lean-forward="false" selection-start-line="619" selection-start-column="51" selection-end-line="619" selection-end-column="67" />
-              <folding>
-                <element signature="e#0#43#0" expanded="true" />
-                <element signature="e#1396#2848#0" expanded="false" />
-                <element signature="e#8124#8562#0" expanded="false" />
-                <element signature="e#16740#17616#0" expanded="false" />
-                <element signature="e#17703#19582#0" expanded="false" />
-                <element signature="e#21502#21830#0" expanded="false" />
-                <element signature="e#21857#22742#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InputProcessing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dev/InputProcessing.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1274">
-              <caret line="49" column="21" lean-forward="false" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#2038#3512#0" expanded="false" />
-                <element signature="e#2380#2399#0" expanded="false" />
-                <element signature="e#2457#2516#0" expanded="false" />
-                <element signature="e#2571#2766#0" expanded="false" />
-                <element signature="e#3340#3398#0" expanded="false" />
-                <element signature="e#3454#3512#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data_processing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dev/data_processing.py">
+      <file leaf-file-name="indexColors.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexColors.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
-              <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#976#5723#0" expanded="false" />
-                <element signature="e#1102#1780#0" expanded="false" />
-                <element signature="e#5763#7064#0" expanded="false" />
-                <element signature="e#7105#9138#0" expanded="false" />
-                <element signature="e#9180#11894#0" expanded="false" />
-                <element signature="e#11924#19660#0" expanded="false" />
-                <element signature="e#19848#21282#0" expanded="false" />
-                <element signature="e#21322#21511#0" expanded="false" />
-                <element signature="e#21554#22036#0" expanded="false" />
-                <element signature="e#22057#22304#0" expanded="false" />
-                <element signature="e#22331#22881#0" expanded="false" />
-              </folding>
+              <caret line="17" column="25" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="17" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="indexOptions.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexOptions.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="26" column="5" lean-forward="false" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dev/templates/dev/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="963">
+              <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="indexComm.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexComm.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="91" column="33" lean-forward="false" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="imageLoad.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dev/static/dev/imageLoad.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="492">
+              <caret line="26" column="4" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="53" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -162,8 +118,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../Scripts/processing_crop.py" />
-        <option value="D:/Python/licenta_parts/working_parts/test_emnist.py" />
         <option value="$PROJECT_DIR$/../Scripts/ProcessRawData.py" />
         <option value="$PROJECT_DIR$/PyDraw/settings.py" />
         <option value="$PROJECT_DIR$/PyDraw/settings/__init__.py" />
@@ -201,18 +155,20 @@
         <option value="$PROJECT_DIR$/dev/templates/dev/indexTemp.html" />
         <option value="$PROJECT_DIR$/dev/static/dev/styleIndex.css" />
         <option value="$PROJECT_DIR$/dev/static/dev/mainBuild.js" />
-        <option value="$PROJECT_DIR$/dev/static/dev/index/indexColors.js" />
         <option value="$PROJECT_DIR$/dev/static/dev/index/indexMain.js" />
         <option value="$PROJECT_DIR$/dev/urls.py" />
-        <option value="$PROJECT_DIR$/dev/templates/dev/index.html" />
         <option value="$PROJECT_DIR$/dev/static/dev/index/styleIndex.css" />
         <option value="$PROJECT_DIR$/draw/views.py" />
         <option value="$PROJECT_DIR$/dev/data_to_letters.py" />
         <option value="$PROJECT_DIR$/dev/InputProcessing.py" />
         <option value="$PROJECT_DIR$/dev/data_processing.py" />
         <option value="$PROJECT_DIR$/dev/static/dev/index/indexSave.js" />
-        <option value="$PROJECT_DIR$/dev/static/dev/imageLoad.html" />
         <option value="$PROJECT_DIR$/dev/views.py" />
+        <option value="$PROJECT_DIR$/dev/static/dev/imageLoad.html" />
+        <option value="$PROJECT_DIR$/dev/static/dev/index/indexColors.js" />
+        <option value="$PROJECT_DIR$/dev/templates/dev/index.html" />
+        <option value="$PROJECT_DIR$/dev/static/dev/index/indexOptions.js" />
+        <option value="$PROJECT_DIR$/dev/static/dev/index/indexComm.js" />
       </list>
     </option>
   </component>
@@ -274,22 +230,14 @@
               <item name="PyDraw" type="b2602c69:ProjectViewProjectNode" />
               <item name="PyDraw" type="462c0819:PsiDirectoryNode" />
               <item name="dev" type="462c0819:PsiDirectoryNode" />
-              <item name="temporary" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PyDraw" type="b2602c69:ProjectViewProjectNode" />
               <item name="PyDraw" type="462c0819:PsiDirectoryNode" />
               <item name="dev" type="462c0819:PsiDirectoryNode" />
-              <item name="temporary" type="462c0819:PsiDirectoryNode" />
-              <item name="vala" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PyDraw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PyDraw" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="dev" type="462c0819:PsiDirectoryNode" />
-              <item name="temporary" type="462c0819:PsiDirectoryNode" />
-              <item name="vala" type="462c0819:PsiDirectoryNode" />
-              <item name="words" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PyDraw" type="b2602c69:ProjectViewProjectNode" />
@@ -557,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527600758943</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Image processing and segmentation is done, and integrated. It only remains to do dom arrangement and naming of the directory.">
+      <created>1527665806380</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1527665806380</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -643,7 +598,8 @@
     <MESSAGE value="Added element merging in WordBuilder" />
     <MESSAGE value="Added to data_processing all the classes and logic for segmentation. Although the char segmentation is poor." />
     <MESSAGE value="Mid dev of OutputBuilder, a class that writes to disk individual png images for every element in specific directories, in order to be crawled and outputed to JS file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Mid dev of OutputBuilder, a class that writes to disk individual png images for every element in specific directories, in order to be crawled and outputed to JS file." />
+    <MESSAGE value="Image processing and segmentation is done, and integrated. It only remains to do dom arrangement and naming of the directory." />
+    <option name="LAST_COMMIT_MESSAGE" value="Image processing and segmentation is done, and integrated. It only remains to do dom arrangement and naming of the directory." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -671,13 +627,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Python36/Lib/site-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48620">
-          <caret line="1881" column="0" lean-forward="false" selection-start-line="1881" selection-start-column="0" selection-end-line="1881" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python36/Lib/site-packages/numpy/core/_methods.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
@@ -843,13 +792,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexColors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dev/static/dev/util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
@@ -930,39 +872,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dev/templates/dev/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h3#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#canvas#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/draw/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="9" column="4" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="32" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/data_to_letters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-701">
-          <caret line="619" column="67" lean-forward="false" selection-start-line="619" selection-start-column="51" selection-end-line="619" selection-end-column="67" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-            <element signature="e#1396#2848#0" expanded="false" />
-            <element signature="e#8124#8562#0" expanded="false" />
-            <element signature="e#16740#17616#0" expanded="false" />
-            <element signature="e#17703#19582#0" expanded="false" />
-            <element signature="e#21502#21830#0" expanded="false" />
-            <element signature="e#21857#22742#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -976,7 +890,7 @@
         <state relative-caret-position="1274">
           <caret line="49" column="21" lean-forward="false" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="false" />
             <element signature="e#2038#3512#0" expanded="false" />
             <element signature="e#2380#2399#0" expanded="false" />
             <element signature="e#2457#2516#0" expanded="false" />
@@ -992,7 +906,7 @@
         <state relative-caret-position="442">
           <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="false" />
             <element signature="e#976#5723#0" expanded="false" />
             <element signature="e#1102#1780#0" expanded="false" />
             <element signature="e#5763#7064#0" expanded="false" />
@@ -1005,14 +919,6 @@
             <element signature="e#22057#22304#0" expanded="false" />
             <element signature="e#22331#22881#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexSave.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1030,10 +936,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dev/data_to_letters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-701">
+          <caret line="619" column="67" lean-forward="false" selection-start-line="619" selection-start-column="51" selection-end-line="619" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#43#0" expanded="false" />
+            <element signature="e#1396#2848#0" expanded="false" />
+            <element signature="e#8124#8562#0" expanded="false" />
+            <element signature="e#16740#17616#0" expanded="false" />
+            <element signature="e#17703#19582#0" expanded="false" />
+            <element signature="e#21502#21830#0" expanded="false" />
+            <element signature="e#21857#22742#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexColors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="17" column="25" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="17" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dev/static/dev/imageLoad.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="20" column="7" lean-forward="true" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
+        <state relative-caret-position="492">
+          <caret line="26" column="4" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexOptions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="5" lean-forward="false" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/templates/dev/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="963">
+          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev/static/dev/index/indexComm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="91" column="33" lean-forward="false" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="33" />
           <folding />
         </state>
       </provider>

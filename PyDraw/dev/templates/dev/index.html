@@ -10,7 +10,7 @@
     <title>PyDraw Dev</title>
 </head>
 {% csrf_token %}
-<body style="margin: 0" onload="initColors()" >
+<body style="margin: 0" onload="initColors();initOptions();" >
 <h3 style="text-align: center;">Intelligent handwrite recognition</h3>
 
     <section>
@@ -34,11 +34,13 @@
     </div>
 
     <div id="right">
-
+        <div id="options">
+        </div>
     </div>
     </section>
         <script src="{% static 'dev/index/indexColors.js' %}"> </script>
         <script src="{% static 'dev/index/indexMain.js' %}"> </script>
-        <script src="{% static 'dev/index/indexSave.js' %}"> </script>
+        <script src="{% static 'dev/index/indexComm.js' %}"> </script>
+        <script src="{% static 'dev/index/indexOptions.js' %}"> </script>
  </body>
 </html>

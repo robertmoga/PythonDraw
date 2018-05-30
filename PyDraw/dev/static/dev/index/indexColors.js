@@ -30,8 +30,7 @@ function setSwatch(e)
     var swatch = e.target; // returns the element on which the event was fired
     setHue(swatch.style.backgroundColor);
     swatch.className = 'swatch active'
-//    console.log(">> Setat pentru " + swatch.className );
-    //alert('am iesit din set swatch');
+
 }
 
 function initColors(){
