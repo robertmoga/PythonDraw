@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7550d10d-2fd4-404a-9135-42a0828a1280" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/dev/static/dev/index/styleIndex2.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dev/static/dev/testDict.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dev/test_calibrare.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/dev/InputProcessing.py" afterPath="$PROJECT_DIR$/dev/InputProcessing.py" />
-      <change beforePath="$PROJECT_DIR$/dev/data_processing.py" afterPath="$PROJECT_DIR$/dev/data_processing.py" />
-      <change beforePath="$PROJECT_DIR$/dev/data_to_letters.py" afterPath="$PROJECT_DIR$/dev/data_to_letters.py" />
-      <change beforePath="$PROJECT_DIR$/dev/static/dev/imageLoad.html" afterPath="$PROJECT_DIR$/dev/static/dev/imageLoad.html" />
-      <change beforePath="$PROJECT_DIR$/dev/static/dev/index/indexComm.js" afterPath="$PROJECT_DIR$/dev/static/dev/index/indexComm.js" />
-      <change beforePath="$PROJECT_DIR$/dev/static/dev/index/indexMain.js" afterPath="$PROJECT_DIR$/dev/static/dev/index/indexMain.js" />
-      <change beforePath="$PROJECT_DIR$/dev/static/dev/index/styleIndex.css" afterPath="$PROJECT_DIR$/dev/static/dev/index/styleIndex.css" />
-      <change beforePath="$PROJECT_DIR$/dev/static/dev/style.css" afterPath="$PROJECT_DIR$/dev/static/dev/style.css" />
-      <change beforePath="$PROJECT_DIR$/dev/tempFiles/fis.txt" afterPath="$PROJECT_DIR$/dev/tempFiles/fis.txt" />
-      <change beforePath="$PROJECT_DIR$/dev/tempFiles/newImage.png" afterPath="$PROJECT_DIR$/dev/tempFiles/newImage.png" />
-      <change beforePath="$PROJECT_DIR$/dev/templates/dev/index.html" afterPath="$PROJECT_DIR$/dev/templates/dev/index.html" />
-      <change beforePath="$PROJECT_DIR$/dev/templates/dev/indexTemp.html" afterPath="$PROJECT_DIR$/dev/templates/dev/indexTemp.html" />
-      <change beforePath="$PROJECT_DIR$/dev/views.py" afterPath="$PROJECT_DIR$/dev/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -122,8 +106,8 @@
       <file leaf-file-name="InputProcessing.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dev/InputProcessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="119" column="17" lean-forward="true" selection-start-line="119" selection-start-column="17" selection-end-line="119" selection-end-column="17" />
+            <state relative-caret-position="598">
+              <caret line="140" column="23" lean-forward="false" selection-start-line="140" selection-start-column="23" selection-end-line="140" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -565,7 +549,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527702259503</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="modified the index.html">
+      <created>1528879836742</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1528879836742</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -643,7 +634,8 @@
     <MESSAGE value="Image processing and segmentation is done, and integrated. It only remains to do dom arrangement and naming of the directory." />
     <MESSAGE value="json split by elements in JS, did toggles. Still have to solve naming." />
     <MESSAGE value="added indexComm, file that handles ajax requests." />
-    <option name="LAST_COMMIT_MESSAGE" value="added indexComm, file that handles ajax requests." />
+    <MESSAGE value="modified the index.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="modified the index.html" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1072,8 +1064,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dev/InputProcessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="119" column="17" lean-forward="true" selection-start-line="119" selection-start-column="17" selection-end-line="119" selection-end-column="17" />
+        <state relative-caret-position="598">
+          <caret line="140" column="23" lean-forward="false" selection-start-line="140" selection-start-column="23" selection-end-line="140" selection-end-column="23" />
           <folding />
         </state>
       </provider>
