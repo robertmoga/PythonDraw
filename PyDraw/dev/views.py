@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from .InputProcessing import DataToImage, InputFormatting
+from .InputProcessing import DataToImage, InputFormatting, build_name_current
 from .data_processing import OutputBuilder
 
 globalData = []
@@ -16,7 +16,7 @@ NEW_DATASET = 'pd_dataset'
 
 
 def IndexView(request):
-    return render(request, 'dev/index.html')
+    return render(request, 'dev/indexTemp.html')
 
 def IndexProcessing(request):
     imgData = None
@@ -24,7 +24,9 @@ def IndexProcessing(request):
         imgData = request.GET.get('info')
 
     # name generator
-    name = 'vala'
+    name = build_name_current()
+    if name is None:
+        name = 'help'
     path = str(os.getcwd()) + '\\dev\\temporary\\' + name
     in_form = InputFormatting(path, imgData)
     data_reader = DataToImage(path)
@@ -35,11 +37,12 @@ def IndexProcessing(request):
     return JsonResponse(res, safe=False)
 
 
+
 @csrf_exempt
 def IndexTemp(request):
     sys.stderr.write(">> TEMP INDEX ACCESSED \n")
     if request.method == 'GET':
-        return render(request, 'dev/indexTemp.html')
+        return render(request, 'dev/indexOldBackup.html')
     elif request.method == 'POST':
         data = request.POST.get('data')
         print(">> IMG DATA : " + str(data[:10]))
@@ -156,22 +159,4 @@ def save_base64_to_img(data, path):
         fh.write(binary_str)
         fh.close()
 
-# def test_read_bin_img(path):
-#     # with open(path, "rb") as imageFile:
-#     with open("dev/tempFiles/newImage.png", "rb") as imageFile:
-#         string = base64.b64encode(imageFile.read())
-#     part1 = 'data:image/png;base64, '
-#     base64_str = string.decode("utf-8")
-#     result = part1 + str(base64_str)
-#     return result
-#
-#
-# def png_to_base64(path):
-#
-#     with open(path, "rb") as imageFile:
-#         string = base64.b64encode(imageFile.read())
-#     part1 = 'data:image/png;base64, '
-#     base64_str = string.decode("utf-8")
-#     result = part1 + str(base64_str)
-#     print(result[:10])
-#     return result
+

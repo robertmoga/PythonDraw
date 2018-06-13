@@ -2,10 +2,10 @@ var canvas = document.getElementById('canvas');
 canvas.style.background = 'beige';
 var context = canvas.getContext('2d');
 
-canvas.width = 600;
-canvas.height = 300;
+canvas.width = innerWidth;
+canvas.height = 600;
 var dragging=false;
-var radius = 5;
+var radius = 6;
 context.lineWidth = radius*2;
 /*
 every time when is called [designed to be called
@@ -68,5 +68,13 @@ function myAlert(msg) {
 function clear()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
+    destroy_elements();
 }
 
+function destroy_elements()
+    {
+        var myNode = document.getElementById("content");
+        while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+        }
+    }

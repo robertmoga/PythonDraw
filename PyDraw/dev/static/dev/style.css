@@ -3,6 +3,38 @@ body{
 
 }
 
-h3 {
+h2 {
 color : blue;
 }
+
+#right
+{
+    display: block;
+}
+
+.line{
+    margin: 10px;
+    display: block;
+}
+
+.word {
+    margin : 10px;
+    display: inline;
+}
+
+.wordbase {
+    margin : 10px;
+    display: block;
+}
+
+.char{
+    margin : 10px;
+    display: inline;
+}
+
+.char_cont{
+    display: inline-block;
+}
+.label{
+    display: block;
+    }

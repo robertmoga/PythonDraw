@@ -127,7 +127,7 @@ class ImageNormaliser:
         print(">> Sa mori tu")
 
     @staticmethod
-    def plotData(image, winname="win"):
+    def plotData(image, winname="window"):
 
         cv2.namedWindow(winname)  # Create a named window
         cv2.moveWindow(winname, 40, 30)  # Move it to (40,30)
@@ -137,8 +137,8 @@ class ImageNormaliser:
         cv2.destroyAllWindows()
 
     @staticmethod
-    def thresholding(img):
-        ret, thresh = cv2.threshold(img, 1, 255, cv2.THRESH_BINARY)
+    def thresholding(img, thresh=1):
+        ret, thresh = cv2.threshold(img, thresh, 255, cv2.THRESH_BINARY)
         return thresh
 
     @staticmethod
@@ -154,7 +154,7 @@ class ImageNormaliser:
         dim = (new_width, new_height)
         resized = cv2.resize(img, dim, interpolation=cv2.INTER_CUBIC)
         return resized
-
+    #get roi
     @staticmethod
     def find_contours(img):
         im2, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)

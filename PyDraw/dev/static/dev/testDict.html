@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+    <h2>Test dictionar</h2>
+    <div id='main'></div>
+    <div id="right">
+    </div>
+</body>
+
+<script language="javascript" type="text/javascript">
+
+    var btn = document.createElement('button');
+    var txt = document.createTextNode('Delete');
+    btn.appendChild(txt);
+    btn.addEventListener('click', destroy);
+    base = document.getElementById('main');
+    base.appendChild(btn);
+
+    myobj = {
+        "_1": "ana are",
+        "_1_1": "ana",
+        "_1_1_1": "a", "_1_1_2": "n", "_1_1_3": "a",
+        "_1_2": "are",
+        "_1_2_1": "a", "_1_2_2": "r", "_1_2_3": "e",
+        "_2": "mere bune",
+        "_2_1": "mere",
+        "_2_2": "bune",
+        "_2_1_1": "m", "_2_2_1": "e", "_2_3_1": "r", "_2_4_1": "e"
+    };
+
+    obj = {
+        "_1": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAPAAAABKCAAAAACgb4ZdAAACnklEQVR4AeXBCW7bSAAEwOr/P7p3hiJ12Ym8EgMYmKpYTCwmFhOLicXEYmIxsZhYTCwmFhOLicXEYmIxsZhYTCwmFhOLid+q7sRZ4peqe3GW+J1qE7WJk8TvVFMMNcRJ4neqIaYa4iTxK9UUUw1xknhLTfGv1BCbGuIk8WM1xVC7+DdqiE0NcZL4odoFdYh/oobY1BAniZ+pQ6iroDZxnhpiqiHOEj9RN6Fuog5xliI2NcRZ4gfqXmqK+iLeUVPcFLGpIc4SP1AXqSE1BPUs3lFT3BSxqSHOEq/VJtRVUM/iHXURhyI2NcRZ4rWaYqhdTHUR1BBvqKu4KGJTQ5wlXqopNnURU21iqCn+v7oTUw0x1RBniVdqiovaxEVNMdUQ/1s9CTXEUEOcJl6pKS5qExc1xKaGeFBT/E0NUVdRQww1xGnilRpiV1PsaohNDTHVo/iLGmKoXWoIaorTxAs1xa6muKgpNjXEUM/iUFNc1RSbuhPUFKeJF2qIQw2xqyk2NQT1RexqE1c1xK5uQk1xnnihhjjUELuaYlNDqK/iog6xqyGu6lmcKF6oIQ5FHGqKTQ1R34hN3cRFDXGnHsSZ4oUa4lDEoYa4qCF1iDrEVA9iqCEe1L04U7xQQxyKONQQF/UgqF1Qu9QuaopHdROniheKuCriUMSu7sRUXwX1KJ7VRZwsXijiqohDEbu6E1N9EZu6E9+oKe4V8ZF4oYg/KGJXN7GpZ3GoQ3ynpripKT4SLxTxB0Xs6iamehY3tYtv1SZ2tYmPxGnqJqhd/ElN8a36VnwkzlZP4l31VXwmzlaP4n31LD4Up6s78Zl6EJ+K89UhPlZXcYJYTCwmFhOLicXEYmIxsZhYTCwmFhOLicXEYmIxsZhYTCwmFhOL+Q9JAbZLj26WLAAAAABJRU5ErkJggg=="
+        , "_1_1": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAALYAAABKCAAAAAAzy/G6AAACjklEQVRoBdXBCXLcOAAEMPT/H91LaqQ5ZSXrJFUmEEuKJcWSYkmxpFhSLCmWFEuKJcWSYkmxpFhSLCmWFEuKJcWSYknxc9STuBI/Rj2LK/FT1CZqExfip6gphhriQvwUNcRUQ1yIH6KmmGqIC/Gbaop/pYbY1BAX4kJNMdQu/o0aYlNDXIgv1S6oQ/wTNcSmhrgQX6lDqLugNvH31BBTDXElztVDqIeoQ/wtRWxqiCtxqp6lpqgP8R01xUMRmxriSpyqm9SQGoJ6F99RUzwUsakhrsSZ2oS6C+pdfEfdxKGITQ1xJc7UFEPtYqqboIb4hrqLmyI2NcSVOFFTbOomptrEUFP8f/UkphpiqiGuxIka4qY2cVNTTDXE/1ZvQg0x1BCX4kQNcVObuKkhNjXEi5riSg1Rd1FDDDXEpThRxK6m2NUQmxpiqldxoYYYapcagpriUpwoYldT3NQUmxpiqHdxqCnuaopNPQlqiktxosShhtjVFJsagvoQu9rEXQ2xq4dQU1yLEyUONcSuptjUEOpT3NQhdjXEXb2LX4gTJQ5FHGqKTQ1RJ2JTD3FTQzypF/ErcaLEoYhDDXFTQ+oQdYipXsRQQ7yoZ/ErcaLEoYhDDXFTL4LaBbVL7aKmeFUP8UtxouKuiEMRu3oSU30K6lW8q5v4DXGi4q6IQxG7ehJTfYhNPYkTNcWzEp/iRMUXitjVQ2zqXRzqEGdqioca4lOcqPhCEbt6iKnexUPt4lRtYldTfIo/UA9B7eIrNcWpOhOf4s/Vm/iu+hSf4s/Vq/i+ehcn4i+oJ/Fn6kWcib+hDvHH6i6+EEuKJcWSYkmxpFhSLCmWFEuKJcWSYkmxpFhSLCmWFEuKJcWSYkn/AXaPtktvo+3eAAAAAElFTkSuQmCC"
+        , "_1_1_1": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAAAAACPAi4CAAAA20lEQVRYCaXBAW7UUBBAMb/7H3r4KaSslqxQNXaWspSlLGUpS1nKUpaylKUsZSlLWcpSlrKUpSxlKUtZylL+Z5CP8tEg45JP8sH40rhkHPlHno1neZNH40XjW97k0SDjEuPIkDd5NIhxxCCGvMmjIQzCIIYY5JZHI8cgDGLIOHLLo5FjyDGIoXHJLY9GjiHHIMYttzwaOYYcQxh/5FseTS5DjiGM3/JXHk1eDWF8yYv80Ljklh8al9yylKUsZSlLWcpSlrKUpSxlKUtZylKWspSlLGUpS1nKUpZ+AemTMUFoyVgYAAAAAElFTkSuQmCC"
+        , "_1_1_2": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAAAAACPAi4CAAAA2ElEQVRYCaXBCWrEQBAEwcz/P7ossKd1jJY1VISUpCQlKUlJSlKSkpSkJCUpSUlKUpKSlKQkJSlJSUpSkhGQu3CSVzICchdO8kpGQK7ClbySEZCrcCWvZATkFDaykxGQU9jITkZAlvBKnmQE5E/4SG5kBORP+EhuZATkEL6SISMgh/CVDBnh/2SREd7IITzIIiO8kUN4kEVG2MkIF7LICDsZ4UIWGWEjN2GRRUbYyE1YZJERHmQTfskiJSlJSUpSkpKUpCQlKUlJSlKSkpSkJCUpSUlKUpLSD0PXJUHch3l0AAAAAElFTkSuQmCC"
+        , "_1_1_3": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAAAAACPAi4CAAAA30lEQVRYCaXBQVLjUBBAMb37H7rHAyGYqvhvWspSlrKUpSxlKUtZylKWspSlLGUpS1nKUpaylKUsZSmPxksO8mj8yLM8GmSQZ3kyiEGe5ckgBnmWJ4MY5FmeDGLIQf4Y5MsQhhzkbnwLQxhykLvxEoMYcpC78dYggxzkbmj8alxykJtBGC+NSw5yM8h/41dO8mtc8mX8yFHexiUv41vO8jbIzSBfBvkkb4PcjEsu45JP8jbIzfgjn+Rk3OSTHI0f+SxLWcpSlrKUpSxlKUtZylKWspSlLGUpS1nKUpay9A/95S5BtS4WUAAAAABJRU5ErkJggg=="
+        , "_2": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAPAAAABKCAAAAACgb4ZdAAAB+klEQVR4AeXBAXKcMBQFwZn7H/pFgASsYzu1Uawi9bulGClGipFipBgpRoqRYqQYKUaKkWKkGClGipFipBgpRoqRYuQfCJ08nvwDoZPHk3lhkMeTeWGQx5N5YZDHk3lhkMeTeWGQx5Np4SSPJ9PCIM8n00In/wGZFjr5RgD5IDSykkwLB/lOAHkVOllGZoVOvhNAXoVBVpFZ4SAfBWQIIC/CSVaRSaGTD0IjXQC5CxdZRWaEwTDIITRyCI3chY2hkVXkr4WL4SSH0MghNHIXGiGArCLvCn8iu9DIITRyFxohgKwibwqfMNzILmxkEzZyEzYSGllF3hReGQYhbKQJO9mEnVxCI4RGVpE3hTshdNKERpqwkyYc5BIaITSyirwrdLIJgzShkSbsBMIgp9AIoZFVZFLoZBM2QugknOQUGsNGlpFJ4SCH0AihM1zkFC6yjEwKO+lCI4RPySmcZBmZFHbShUZCYzhJ2MgQBllHJoWdDAEMG8MghIMcQicLyaSwkyGcDJ00oZNNGGQdmRQ2cgqDEDayC1+SVWRSaOQSBvkgfE3WkEmhkUvo5HfhaxJAfpZMCo1cwkE+FW6E8Ep+lkwKjVzCTr4WdrILd/KzZFJoZE44yc+SYqQYKUaKkWKkGClGipFipBgpRoqRYqQYKUaKkWKkGClGivkFGex8S0Q8HMwAAAAASUVORK5CYII="
+        , "_2_1": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIUAAABKCAAAAACwD8iBAAAB60lEQVRoBc3BC46jQBAFwcz7H/pt8Wmwx3aDtEKqCOlAOpAOpAPpQDqQDqQD6UA6kA6kA+lAOpAOpAPpQDqQDqQDuSXs5AlyS9jJE+SOMMgT5I4wyBPkjjDIE+SOMMgT5I4wyBPkhnCQJ8gNYZBHyA1hJ8+QG8JOJgLIH6HIBbkhbGQmgLwLO5mRa2EnMwHkXRhkQq6FjfwVkCGAvAkHmZBLYSd/hCK7APIqnGRC5sJgGGQTimxCkVdhYSgyIRPhZDjIJhTZhCKvQhECyIR8ES7IKhTZhCKvQhECyIR8ET4YXsgqLGQRFvIiLCQUmZAvwivDIISFlLCSRVjJKRQhFJmQL8JJCDspoUgJKylhI6dQhFBkQr4IG1mEQUooUsJKIAxyCEUIRSbkUtjJIiyEsJNwkEMohoXMyKWwkU0oQtgZTnIIJ5mRS2Elu1CE8JUcwkFm5FJYyS4UCcVwkLCQIQwyJZfCSoYAhoVhEMJGNmEnc3IprGQIB8NOStjJIgwyJZfCQg5hEMJCVuEnmZBLocgpDPJH+E1+kkuhyCns5FP4TQLySS6FIqewka/CCyG8kU9yKRQ5hZX8FlayCi/kk1wKRf5PGOSTdCAdSAfSgXQgHUgH0oF0IB1IB9KBdCAdSAfSgXQgHUgH0sE/DEl8S60nFk8AAAAASUVORK5CYII="
+        , "_2_1_1": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAAAAACPAi4CAAABD0lEQVRYCaXBAW6EQAwEwe7/P3pCwoKPAxFLrpIhGZIhGZIhGZIhGZIhGZKucJIiXeEkRbrCSYp0hZMU6QonKdIUihRpCkWKNIUiRZpCkSJNoUiRplCkSFMoUqQnnOST9ISDXEhPOMiF9IRFrqQnLHIlPWGRK+kIi3yTjrDIN+kIi3yThrCTO/lHOAiEnRzkRfgkhEUO8iJ8EsIiB3kRPgjhIAd5Ef5IACFs5EJeBJBNOMmVvAggm3CSK+kIJ7mShnCQb9IQFrmRhrCTO2kIO7mThrCTO2kIO7mThrCTO2kIO7mThvBLnkhD2MgjaQgbeSQNYSOPpCFs5JE0hI08kiEZkiEZkiEZkiEZkiEZ+gEp5jRBtmz1OwAAAABJRU5ErkJggg=="
+        , "_2_1_2": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAAAAACPAi4CAAAA+0lEQVRYCaXBQQrDMBAEwe7/P3pikASL48OAquSSXJJLckkuySW5JJfkkjTCQ75IIzzkizTCQ75IIzzkizTCQ75IIzzkizTCQ75IIzzkizTCQ75IIzzkizTCIn+kERb5I42wyB9phEX+SCMs8kca4ZAXaYRDXqQRDnmRRjjkRRrhkBdphENepBEOeZFGOORFSuGQSUrhkElK4ZBJSuGQSUrhkElK4ZBJSuGQSUrhkElqYZFJamGRSWphkUlqYZFJamGRSWphkE1qYZBNamGQTWphkE1qYZBNamGQTWphkE1qYZBNamGQTWphkE0uySW5JJfkklySS3JJLv0AlKYuQV3t154AAAAASUVORK5CYII="
+        , "_2_1_3": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAAAAACPAi4CAAABGUlEQVRYCaXBAYrEIBQFwe77H/rtEpGJMWrgV0mRFEmRFEmRFEmRFMkXAeSVfBFAXskXAeSVfBFAXskXAeSVfBFAXskXAeSVHIVOZnIUOpnJUehkJkehk5kchU5mchQ6mclR6GQmR6GTmRyFTmZyFDqZyVH4kSc5Cj/yJAfhTp7kINzJkxyEO3mSg3AnT3IQ7uRJDsKdPMlBuJMn2QoTGchWmMhAtsJEBrIVJjKQrTCRgWyFi0AYSCNb4SIQBtLIWugEwkAaWQudQBhII2uhEwgDaWQtdAJhII2shU4gDKSRtXCRLvxII2vhIl34kUbWwkW68CONrIWL7MhauMiOrIV/sidr4Z/sSZEUSZEUSZEUSZEUSZEUSdEfU4o3QYei8zMAAAAASUVORK5CYII="
+        , "_2_1_4": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAAAAACPAi4CAAABEUlEQVRYCaXBAW6EMBAEwe7/P3oiy+TCwZolcpVskk2ySTbJJtkkm2STbJJWGKQmrTBITVphkJq0wiA1aYVBatIKg9SkFQapSSsMUpNWGKQmrTBITVphkJq0wiA1aYVBatIKg9SkFQapSSNMUpNGmKQmjTBJTRphkpo0wiQ1aYRJavIo/JKaPAq/pCaPwh+pyKPwRyryIJxJRR6EM6nIUriSO1kKV3InS+FK7mQpXMmdLIUruZOlcCV3shQGGcIkV7IUBhnCJFeyFECm8CFfZCmATOFDvshL4UQ+5KVwIh/yUjiRD3kpfJGDvBS+yEFeCydykNfCiRzkX8JBDvIv4SAH2SSbZJNskk2ySTbJJtn0A+qcMkGveKZLAAAAAElFTkSuQmCC"
+        , "_2_1_5": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAAAAACPAi4CAAAAwklEQVRYCaXBAWrEMBAEwe7/P3pih5wc9jASTJWUpCQlKUlJSlKSkpSkJCUpSUlKUpKSlKQkJSlJSUryLVzkjHwJf+SATGGRPRnCQ/ZkCA/ZkyE8ZE+GcJMAsidDuBkusidDuBkusidDuEi4yJ4M4SF7MoRFDsgQFjkgQ1jkgAzhQ07IEgTCh5yQJUyyJ0v4JjuyhDfyTpbwIeE/eSeP8Etu4SHvpCQlKUlJSlKSkpSkJCUpSUlKUpKSlKQkJSlJSUo/NGscQcRiPwgAAAAASUVORK5CYII="
+        , "_2_2": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIUAAABKCAAAAACwD8iBAAAB60lEQVRoBc3BC46jQBAFwcz7H/pt8Wmwx3aDtEKqCOlAOpAOpAPpQDqQDqQD6UA6kA6kA+lAOpAOpAPpQDqQDqQDuSXs5AlyS9jJE+SOMMgT5I4wyBPkjjDIE+SOMMgT5I4wyBPkhnCQJ8gNYZBHyA1hJ8+QG8JOJgLIH6HIBbkhbGQmgLwLO5mRa2EnMwHkXRhkQq6FjfwVkCGAvAkHmZBLYSd/hCK7APIqnGRC5sJgGGQTimxCkVdhYSgyIRPhZDjIJhTZhCKvQhECyIR8ES7IKhTZhCKvQhECyIR8ET4YXsgqLGQRFvIiLCQUmZAvwivDIISFlLCSRVjJKRQhFJmQL8JJCDspoUgJKylhI6dQhFBkQr4IG1mEQUooUsJKIAxyCEUIRSbkUtjJIiyEsJNwkEMohoXMyKWwkU0oQtgZTnIIJ5mRS2Elu1CE8JUcwkFm5FJYyS4UCcVwkLCQIQwyJZfCSoYAhoVhEMJGNmEnc3IprGQIB8NOStjJIgwyJZfCQg5hEMJCVuEnmZBLocgpDPJH+E1+kkuhyCns5FP4TQLySS6FIqewka/CCyG8kU9yKRQ5hZX8FlayCi/kk1wKRf5PGOSTdCAdSAfSgXQgHUgH0oF0IB1IB9KBdCAdSAfSgXQgHUgH0sE/DEl8S60nFk8AAAAASUVORK5CYII="
+        , "_2_3": "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIUAAABKCAAAAACwD8iBAAAB60lEQVRoBc3BC46jQBAFwcz7H/pt8Wmwx3aDtEKqCOlAOpAOpAPpQDqQDqQD6UA6kA6kA+lAOpAOpAPpQDqQDqQDuSXs5AlyS9jJE+SOMMgT5I4wyBPkjjDIE+SOMMgT5I4wyBPkhnCQJ8gNYZBHyA1hJ8+QG8JOJgLIH6HIBbkhbGQmgLwLO5mRa2EnMwHkXRhkQq6FjfwVkCGAvAkHmZBLYSd/hCK7APIqnGRC5sJgGGQTimxCkVdhYSgyIRPhZDjIJhTZhCKvQhECyIR8ES7IKhTZhCKvQhECyIR8ET4YXsgqLGQRFvIiLCQUmZAvwivDIISFlLCSRVjJKRQhFJmQL8JJCDspoUgJKylhI6dQhFBkQr4IG1mEQUooUsJKIAxyCEUIRSbkUtjJIiyEsJNwkEMohoXMyKWwkU0oQtgZTnIIJ5mRS2Elu1CE8JUcwkFm5FJYyS4UCcVwkLCQIQwyJZfCSoYAhoVhEMJGNmEnc3IprGQIB8NOStjJIgwyJZfCQg5hEMJCVuEnmZBLocgpDPJH+E1+kkuhyCns5FP4TQLySS6FIqewka/CCyG8kU9yKRQ5hZX8FlayCi/kk1wKRf5PGOSTdCAdSAfSgXQgHUgH0oF0IB1IB9KBdCAdSAfSgXQgHUgH0sE/DEl8S60nFk8AAAAASUVORK5CYII="
+
+
+    }
+
+    keys = Object.keys(obj);
+    var source = document.getElementById('right');
+    option = "words"
+
+    if (option == "lines") {
+
+        for (var i = 0; i < keys.length; i++) {
+            if (keys[i].length == 2) {
+
+                // document.write(keys[i] + "  :  " + (keys[i].split('_')));
+                // document.write("<br/>");
+                var line_cont = document.createElement("div");
+                line_cont.className = "lineContainer";
+
+                var line = document.createElement("img");
+                line.className = "line";
+                // var text = document.createTextNode(obj[keys[i]]);
+                // line.appendChild(text);
+                line.src = obj[keys[i]];
+                // document.write(keys[i] + "<br/>");
+                line_cont.appendChild(line);
+                for (var j = 0; j < keys.length; j++) {
+                    if (keys[j].length == 4) {
+                        ks = keys[j].split('_');
+                        // document.write(keys[j] + " : linia " + ks[1]);
+                        if (ks[1] == keys[i][1]) {
+                            // document.write(keys[j]);
+                            // document.write("<br/>")
+
+                            var word = document.createElement("img");
+                            word.className = "word";
+                            word.src = obj[keys[j]];
+                            // var text = document.createTextNode(obj[keys[j]]);
+                            // word.appendChild(text);
+
+                            line_cont.appendChild(word);
+                        }
+                    }
+                }
+                // document.write("<br/>");
+                source.appendChild(line_cont);
+            }
+        }
+    }
+
+    else{
+        for (var i = 0; i < keys.length; i++) {
+            if (keys[i].length == 4) {
+
+                // document.write(keys[i] + "  :  " + (keys[i].split('_')));
+                // document.write("<br/>");
+                var word_cont = document.createElement("div");
+                word_cont.className = "wordContainer";
+
+                var word = document.createElement("img");
+                word.className = "wordbase";
+                // var text = document.createTextNode(obj[keys[i]]);
+                // line.appendChild(text);
+                word.src = obj[keys[i]];
+                // document.write(keys[i] + "<br/>");
+                word_cont.appendChild(word);
+                for (var j = 0; j < keys.length; j++) {
+                    if (keys[j].length == 6) {
+                        ks = keys[j].split('_');
+                        // document.write(keys[j] + " : linia " + ks[1]);
+                        if (ks[1] == keys[i][1]) {
+                            // document.write(keys[j]);
+                            // document.write("<br/>")
+                            var char_cont = document.createElement("div")
+                            char_cont.className = "char_cont";
+                            var char = document.createElement("img");
+                            var label = document.createTextNode("NaC");
+                            label.className= "label";
+                            char.className = "char";
+                            char.src = obj[keys[j]];
+                            char_cont.appendChild(char);
+                            char_cont.appendChild(label);
+                            // var text = document.createTextNode(obj[keys[j]]);
+                            // word.appendChild(text);
+
+                            word_cont.appendChild(char_cont);
+                        }
+                    }
+                }
+                // document.write("<br/>");
+                source.appendChild(word_cont);
+            }
+        }
+    }
+
+    function destroy_elements()
+    {
+        var myNode = document.getElementById("right");
+        while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+        }
+    }
+
+
+</script>
+
+</html>

@@ -1,67 +1,67 @@
 import cv2
 import numpy as np
-from .InputProcessing import InputFormatting, DataToImage
-from .data_to_letters import ImageNormaliser
+from InputProcessing import InputFormatting
+from data_to_letters import ImageNormaliser
 import os
 import re
 import base64
 
-# class DataToImage:
-#     def __init__(self, dataPath, imagePath):
-#         self._base64 = self.read_from_file(dataPath)
-#         self.imageName = imagePath
-#         self.base64_to_image()
-#         self._image = None
-#
-#     @property
-#     def base64(self):
-#         return self._base64
-#
-#     @base64.setter
-#     def base64(self, value):
-#         if isinstance(value, str):
-#             self._base64 = value
-#
-#     @staticmethod
-#     def partition(strOne):
-#         if ',' in strOne:
-#             strOne = strOne.partition(",")[2]
-#             pad = len(strOne) % 4
-#             strOne += "=" * pad
-#             return strOne
-#         else:
-#             return strOne
-#
-#     def read_from_file(self, dataPath):
-#         f = open(dataPath, 'r')
-#         strOne = f.read()
-#         f.close()
-#         # print(">> " +strOne)
-#         data = self.partition(strOne)
-#         return data
-#
-#     def base64_to_image(self):
-#         base64_str = self.partition(self._base64)
-#         binary_str = base64.b64decode(base64_str)
-#         # Here comes the naming solution\
-#         self.imageName = "tempFiles/newImage.png"
-#         with open(self.imageName, "wb") as fh:
-#             fh.write(binary_str)
-#
-#     def get_image(self):
-#         img = cv2.imread(self.imageName, cv2.IMREAD_GRAYSCALE)
-#         return img
-#
-#     @property
-#     def image(self):
-#         self._image = self.get_image()
-#         return self._image
-#
-#     @image.setter
-#     def image(self, value):
-#         if isinstance(value, str):
-#             self._image = value
-#
+class DataToImage:
+    def __init__(self, dataPath, imagePath):
+        self._base64 = self.read_from_file(dataPath)
+        self.imageName = imagePath
+        self.base64_to_image()
+        self._image = None
+
+    @property
+    def base64(self):
+        return self._base64
+
+    @base64.setter
+    def base64(self, value):
+        if isinstance(value, str):
+            self._base64 = value
+
+    @staticmethod
+    def partition(strOne):
+        if ',' in strOne:
+            strOne = strOne.partition(",")[2]
+            pad = len(strOne) % 4
+            strOne += "=" * pad
+            return strOne
+        else:
+            return strOne
+
+    def read_from_file(self, dataPath):
+        f = open(dataPath, 'r')
+        strOne = f.read()
+        f.close()
+        # print(">> " +strOne)
+        data = self.partition(strOne)
+        return data
+
+    def base64_to_image(self):
+        base64_str = self.partition(self._base64)
+        binary_str = base64.b64decode(base64_str)
+        # Here comes the naming solution\
+        self.imageName = "tempFiles/newImage.png"
+        with open(self.imageName, "wb") as fh:
+            fh.write(binary_str)
+
+    def get_image(self):
+        img = cv2.imread(self.imageName, cv2.IMREAD_GRAYSCALE)
+        return img
+
+    @property
+    def image(self):
+        self._image = self.get_image()
+        return self._image
+
+    @image.setter
+    def image(self, value):
+        if isinstance(value, str):
+            self._image = value
+
 
 def image_norm(img):
     # we are doing the default threshold in order to accept every color in the image
@@ -108,10 +108,13 @@ class ImageAnalyser:
         #kernels for morphological operations
         kernel1 = np.ones((2, 30))
         kernel2 = np.ones((3, 3))
-
+        # ImageNormaliser.plotData(img)
         dilation = cv2.dilate(img, kernel2, iterations=1)
+        # ImageNormaliser.plotData(dilation)
         closing = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel1)
+        # ImageNormaliser.plotData(closing)
         erosion = cv2.erode(closing, kernel2, iterations=2)
+        # ImageNormaliser.plotData(erosion)
 
         img = cv2.cvtColor(erosion, cv2.COLOR_RGB2GRAY)
         return img
@@ -128,9 +131,14 @@ class ImageAnalyser:
         kernel1 = np.ones((30, 2))
         kernel2 = np.ones((3, 3))
 
+
+        # ImageNormaliser.plotData(img)
         dilation = cv2.dilate(img, kernel2, iterations=1)
+        # ImageNormaliser.plotData(dilation, 'dil')
         closing = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel1)
+        # ImageNormaliser.plotData(closing, 'closing')
         erosion = cv2.erode(closing, kernel2, iterations=2)
+        # ImageNormaliser.plotData(erosion, 'erosion')
 
         img = cv2.cvtColor(erosion, cv2.COLOR_RGB2GRAY)
         return img
@@ -207,9 +215,9 @@ class ImageAnalyser:
             if index > -1 and i < index:
                 continue
 
-            if (white_values[i] < 10 and white_values[i] > 0) and \
-                    (white_values[i + 1] < 10 and white_values[i + 1] > 0):
-                if abs(white_values[i] - white_values[i + 1]) < 10:
+            if (white_values[i] < 8 and white_values[i] > 0) and \
+                    (white_values[i + 1] < 8 and white_values[i + 1] > 0):
+                if abs(white_values[i] - white_values[i + 1]) < 5:
 
                     count = trigger(i, white_values)
                     if count != -1:
@@ -279,6 +287,7 @@ class LineBuilder(ImageAnalyser):
         # ImageNormaliser.plotData(img_morpho)
         oy_values = self.compute_projection_oy(img_morpho)
         bounds = self.get_bounds(oy_values)
+
         # self.draw_bounds(self.raw_image, bounds, axis='oy')
         return bounds
 
@@ -323,6 +332,9 @@ class WordBuilder(ImageAnalyser):
         # ImageNormaliser.plotData(img_morpho)
         ox_values = self.compute_projection_ox(img_morpho)
         bounds = self.get_bounds(ox_values)
+        # print(ox_values)
+        # print(bounds)
+        # ImageNormaliser.plotData(img_morpho)
         # self.draw_bounds(self.raw_image, bounds)
 
         return bounds
@@ -394,7 +406,6 @@ class CharBuilder(ImageAnalyser):
         self.draw_bounds_hue(bounds)
         print(">>> " + str(bounds))
 
-        # self.draw_bounds(bounds)
         return bounds
 
     def __normalise_bounds(self, bounds):
@@ -445,19 +456,20 @@ class CharBuilder(ImageAnalyser):
                 continue
             else:
                 new_elem = self.raw_image[:, elem[0]:elem[1]]
+                print(">>" + str(new_elem.shape))
                 # ImageNormaliser.plotData(new_elem)
                 char_synth = CharSynthesizer(new_elem)
                 new_elem = char_synth.normalise_char()
                 if new_elem is not None:
-                    # print(">>" + str(new_elem.shape))
-                    # ImageNormaliser.plotData(new_elem)
-                    ret, thresh = cv2.threshold(new_elem, 0, 255, cv2.THRESH_BINARY)
-                    new_elem = thresh
+                    print(">>" + str(new_elem.shape))
+                    # ImageNormaliser.plotData(new_elem, "First window")
+                    # ret, thresh = cv2.threshold(new_elem, 0.7, 255, cv2.THRESH_BINARY)
+                    # new_elem = thresh
+                    new_elem = new_elem * 255
                     new_elem = Element(img=new_elem, type='char')
                     elements.append(new_elem)
 
         return elements
-
 
 class CharSynthesizer:
     def __init__(self, img, resize_dim=64):
@@ -468,7 +480,6 @@ class CharSynthesizer:
         img = self.crop_char(self.__img)
         img = ImageNormaliser.resize_specific_dim(img, self.__resize_dim)
         if np.count_nonzero(img > 0):
-            # ImageNormaliser.plotData(img)
             return img
         return None
 
@@ -610,7 +621,7 @@ class CharSynthesizer:
 
     #method is computing information percent in order to eroad or not and adds
     #negative space
-    def square_img(self,char):
+    def square_img(self, char):
 
         img = char.copy()
         #count the distribution of whites vs blacks
@@ -618,38 +629,23 @@ class CharSynthesizer:
         black = np.count_nonzero(img == 0)
         white = np.count_nonzero(img > 0)
         # print(">> Black value " + str(black) + "  White value " + str(white))
-
         computed_percent = -1
         if black > white:
-            computed_percent = int((white * 100)/ black)
-        # print(computed_percent)
+            computed_percent = int((white * 100)/ (black+white)) #+ white
+            print(">>>" + str(img.shape) + "   ->" + str(computed_percent))
         if computed_percent > -1:
             if computed_percent > 35:
                 kernel = np.ones((2, 2))
-                img = cv2.erode(img, kernel, iterations=2)
+                img = cv2.erode(img, kernel, iterations=1)
                 val = int(img.shape[0] / 4)
                 img = self.add_negative_space(img, val)
-
             elif computed_percent > 10 and computed_percent < 35:
                 val = int(img.shape[0] / 4) #discutabil
                 img = self.add_negative_space(img, val)
             else:
                 #FINDME
-                kernel = np.ones((2, 2))
-                temp = cv2.dilate(img, kernel, iterations=2)
-                black = np.count_nonzero(temp == 0)
-                white = np.count_nonzero(temp > 0)
-                computed_percent = int((white * 100) / black)
-                # print(">> Second time computed info percent : " + str(computed_percent))
-                # ImageNormaliser.plotData(img)
-                if computed_percent < 10:
-                    # fill the image with zeros, in case of having less than 10% info
-                    img = np.zeros(img.shape)
-                else:
-                    val = int(img.shape[0] / 6)  # discutabil
-                    img = self.add_negative_space(img, val)
+                img = np.zeros(img.shape)
 
-        # ImageNormaliser.plotData(img, "char")
 
             return img
         else:
@@ -740,10 +736,6 @@ class OutputBuilder:
         # result['noElem'] = count
         return result
 
-
-class CharClassifier:
-    pass
-
 def test(img):
     line_builder = LineBuilder(img)
     lines = line_builder.elements
@@ -764,11 +756,11 @@ def get_elems(img):
     lines = line_builder.elements
 
     for line in lines:
-        ImageNormaliser.plotData(line.image)
+        # ImageNormaliser.plotData(line.image)
         word_builder = WordBuilder(line)
         words = word_builder.elements
         for word in words:
-            ImageNormaliser.plotData(word.image)
+            # ImageNormaliser.plotData(word.image)
 
             char_builder = CharBuilder(word)
             # bounds = char_builder.bounds
@@ -776,6 +768,42 @@ def get_elems(img):
             chars = char_builder.elements
             for char in chars:
                 ImageNormaliser.plotData(char.image)
+                pass
+
+def build_dataset(img):
+    initial_elem = Element(img)
+    dir_path = os.getcwd()+"\\pd2_dataset\\images"
+    line_builder = LineBuilder(initial_elem)
+    lines = line_builder.elements
+
+    for line in lines:
+        word_builder = WordBuilder(line)
+        words = word_builder.elements
+        for word in words:
+
+            char_builder = CharBuilder(word)
+            chars = char_builder.elements
+            for char in chars:
+                ImageNormaliser.plotData(char.image)
+                label = input(">> ")
+                buff = read_buff()
+                img_path = dir_path + "\\" + str(label) +"_"+str(buff)+".png"
+                # print(img_path)
+                cv2.imwrite(img_path, char.image)
+
+def read_buff():
+    path = os.getcwd() + "\\pd2_dataset"+"\\buff.txt"
+    val = -1
+    with open(path, 'r') as f:
+        val = f.read()
+        f.close()
+    val = int(val)
+    val += 1
+    if val != 0:
+        with open(path, 'w')  as f:
+            f.write(str(val))
+            f.close()
+    return val
 
 def show_projection(im, values):
     img = np.zeros((im.shape[0], im.shape[1]))
@@ -787,22 +815,11 @@ def show_projection(im, values):
     ImageNormaliser.plotData(img)
 
 if __name__ == "__main__":
-    pass
-    # data_reader = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
-    # image = data_reader.image
 
-    # name = 'vala'
-    # path = str(os.getcwd()) + '\\temporary\\' + name
-    #
-    #
-    # ir = OutputBuilder(path)
-    # # ir.build_images()
-    # res = ir.build_output_dict()
-    #
-    # for k, v in res.items():
-    #     print(str(k) + "   " + str(v))
+    data_reader = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
+    image = data_reader.image
 
-    # image = image_norm(image)
+    image = image_norm(image)
     # get_elems(image)
     # test(image)
-
+    build_dataset(image)

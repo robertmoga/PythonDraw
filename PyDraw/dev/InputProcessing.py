@@ -123,7 +123,30 @@ class DataToImage:
             self._image = value
 
 
+def build_name_current():
+    print(">> Am apelat build name ")
+    buff_path = "F:/_licenta/PythonDraw/PyDraw/dev/temporary/buff.txt"
+    current_number = -1
+    try:
+        with open(buff_path, 'r') as file:
+            current_number = file.read()
+            file.close()
+    except Exception as e:
+        print(">> Exception occured during reading naming buffer : " + str(e))
+    current_number = int(current_number)
+    if current_number != -1:
+        current_number += 1
 
+        try:
+            with open(buff_path, 'w') as file:
+                file.write(str(current_number))
+                file.close()
+        except Exception as e:
+            print(">> Exception occured during writing current num in buffer : " + str(e))
+
+        new_name = 'dir'+str(current_number)
+        return new_name
+    return None
 
 def test():
     print(os.getcwd())

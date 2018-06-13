@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     {% load static %}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="{% static 'dev/index/styleIndex2.css' %}"/>
+    <link rel="stylesheet" href="{% static 'dev/styleIndexTemp.css' %}"/>
     <script src="{% static 'dev/util.js' %}"> </script>
 
     <title>PyDraw Dev</title>
@@ -12,7 +12,10 @@
 <body style="margin: 0"  onload="initColors()">
 
         <div id="toolbar">
-            <div id="options">
+            <div id="rad">
+                Radius <span id="radval">7</span>
+                <div id = "decreaseRad" class="radcontrol">-</div>
+                <div id = "increaseRad" class="radcontrol">+</div>
             </div>
 
             <div id="sendBtn" class="btn">
@@ -31,19 +34,9 @@
             Sorry, your browser needs an update
         </canvas>
 
-        <div id="right">
-            Result
-        <br/>
-        <br/>
-        <br/>
-        <div id="content">
-
-        </div>
-    </div>
-
-        <script src="{% static 'dev/index/indexColors.js' %}"> </script>
-        <script src="{% static 'dev/index/indexMain.js' %}"> </script>
-        <script src="{% static 'dev/index/indexComm.js' %}"> </script>
-        <script src="{% static 'dev/index/indexOptions.js' %}"> </script>
+        <script src="{% static 'dev/mainIndex.js' %}"> </script>
+        <script src="{% static 'dev/radius.js' %}"></script>
+        <script src="{% static 'dev/colors.js' %}"></script>
+        <script src="{% static 'dev/save.js' %}"></script>
     </body>
 </html>
