@@ -6,10 +6,14 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from keras import backend as K
+
 
 from .InputProcessing import DataToImage, InputFormatting, build_name_current
-from .data_processing import OutputBuilder
+from .intelli_recognition import OutputBuilder, CharClassifier
 
+print("Se apeleaza serverul")
+# clf = CharClassifier("dev/tempFiles/keras_pd2_v4.h5")
 globalData = []
 globalData.append("PyDraw Dev 1.0")
 NEW_DATASET = 'pd_dataset'
@@ -32,7 +36,14 @@ def IndexProcessing(request):
     data_reader = DataToImage(path)
     out_build = OutputBuilder(path)
     out_build.build_images()
-    res = out_build.build_output_dict()
+    # try :
+    clf = CharClassifier("dev/tempFiles/keras_pd2_v4.h5")
+    res = out_build.build_output_dict(clf)
+    K.clear_session()
+
+    # except Exception as e:
+    #     print(" >> Eroare in view la clasificare "  + str(e))
+    #     res = out_build.build_output_dict(None)
 
     return JsonResponse(res, safe=False)
 

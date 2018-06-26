@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     {% load static %}
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+    <script src="{% static 'dev/jquery-3.3.1.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'dev/index/styleIndex2.css' %}"/>
     <script src="{% static 'dev/util.js' %}"> </script>
 
@@ -16,7 +17,7 @@
             </div>
 
             <div id="sendBtn" class="btn">
-                Send to Server</div>
+                Process</div>
             <div id="clearBtn" class="btn">
                     Clear</div>
 
@@ -32,7 +33,9 @@
         </canvas>
 
         <div id="right">
-            Result
+            <br/>
+            <div class="results" id="results">Results </div>
+            <div id="audio_div"></div>
         <br/>
         <br/>
         <br/>
@@ -45,5 +48,6 @@
         <script src="{% static 'dev/index/indexMain.js' %}"> </script>
         <script src="{% static 'dev/index/indexComm.js' %}"> </script>
         <script src="{% static 'dev/index/indexOptions.js' %}"> </script>
+
     </body>
 </html>

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
-from InputProcessing import InputFormatting
-from data_to_letters import ImageNormaliser
+from .InputProcessing import InputFormatting
+from .data_to_letters import ImageNormaliser
 import os
 import re
 import base64
@@ -411,7 +411,7 @@ class CharBuilder(ImageAnalyser):
     def __normalise_bounds(self, bounds):
         # elinate the bounds that are above the thresh
         i = 0
-        while i < len(bounds)-1:
+        while i <=len(bounds)-1:
             if self.__check_bound(bounds[i]):
                 bounds.remove(bounds[i])
                 i -= 1
@@ -623,11 +623,21 @@ class CharSynthesizer:
     #negative space
     def square_img(self, char):
 
+        # filling the shapes in order to distinguish letters from simple lines
+        # lines from the extremities of the word can represent segmentation errors
         img = char.copy()
-        #count the distribution of whites vs blacks
+        temp = char.copy()
+        temp = temp * 255
+        temp = cv2.convertScaleAbs(temp, alpha=(255.0 / 65535.0))
+        temp = temp * 255
+        im2, contours, hierarchy = cv2.findContours(temp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cv2.fillPoly(temp, contours, color=255)
 
-        black = np.count_nonzero(img == 0)
-        white = np.count_nonzero(img > 0)
+
+        #count the distribution of whites vs blacks
+        # ImageNormaliser.plotData(temp)
+        black = np.count_nonzero(temp == 0)
+        white = np.count_nonzero(temp > 0)
         # print(">> Black value " + str(black) + "  White value " + str(white))
         computed_percent = -1
         if black > white:
@@ -639,12 +649,13 @@ class CharSynthesizer:
                 img = cv2.erode(img, kernel, iterations=1)
                 val = int(img.shape[0] / 4)
                 img = self.add_negative_space(img, val)
-            elif computed_percent > 10 and computed_percent < 35:
+            elif computed_percent > 6 and computed_percent < 35:
                 val = int(img.shape[0] / 4) #discutabil
                 img = self.add_negative_space(img, val)
             else:
-                #FINDME
+                # #FINDME
                 img = np.zeros(img.shape)
+                pass
 
 
             return img
@@ -814,6 +825,14 @@ def show_projection(im, values):
 
     ImageNormaliser.plotData(img)
 
+def build_dict():
+    new_dict = dict()
+    old = {97: 1, 98: 2, 99: 3, 100: 4, 101: 5, 102: 6, 103: 7, 104: 8, 105: 9, 106: 10, 108: 11, 109: 12, 110: 13, 111: 14, 112: 15, 113: 16, 114: 17, 115: 18, 116: 19, 117: 20, 118: 21, 122: 22}
+
+    for k,v in old.items():
+        new_dict[v] = k
+    print(new_dict)
+
 if __name__ == "__main__":
 
     data_reader = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
@@ -822,4 +841,5 @@ if __name__ == "__main__":
     image = image_norm(image)
     # get_elems(image)
     # test(image)
-    build_dataset(image)
+    # build_dataset(image)
+    build_dict()

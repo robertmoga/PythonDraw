@@ -73,6 +73,13 @@ function clear()
 
 function destroy_elements()
     {
+        var audio_div = document.getElementById("audio_div");
+        while (audio_div.firstChild != null) {
+        
+            console.log(audio_div.firstChild);
+            audio_div.removeChild(audio_div.firstChild);
+        }
+
         var myNode = document.getElementById("content");
         while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);

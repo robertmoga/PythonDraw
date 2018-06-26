@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
-from InputProcessing import InputFormatting
-# from .InputProcessing import DataToImage
-from data_to_letters import ImageNormaliser
-from test_calibrare import DataToImage
+from .InputProcessing import InputFormatting
+from .InputProcessing import DataToImage
+from .data_to_letters import ImageNormaliser
+# from .test_calibrare import DataToImage
 import os
 import re
 from keras.models import load_model
@@ -394,10 +394,9 @@ class CharBuilder(ImageAnalyser):
         self._mean_height = self.compute_partial_projection(morpho_image=img_morpho_oy, axis='ox')
         bounds = self.get_bounds_variable(ox_values)
         bounds = self.__normalise_bounds(bounds)
-        self.draw_bounds_hue(bounds)
+        # self.draw_bounds_hue(bounds)
         print(">>> " + str(bounds))
 
-        # self.draw_bounds(bounds)
         return bounds
 
     def __normalise_bounds(self, bounds):
@@ -724,21 +723,52 @@ class OutputBuilder:
         img = ImageNormaliser.thresholding(img)
         return img
 
-    def build_output_dict(self):
-        result = dict()
-        count = 0
-        dirs = [self.path + "\\" + 'lines',
-        self.path + "\\" + 'words',
-        self.path + "\\" + 'chars']
+#prima data se incearca cu clasificator si daca nu iese se face fara
+    def build_output_dict(self, clf):
+        if clf is not None:
+            # clf = CharClassifier("dev/tempFiles/keras_pd2_v4.h5")
+            result = dict()
+            count = 0
+            dirs = [self.path + "\\" + 'lines',
+                    self.path + "\\" + 'words',
+                    self.path + "\\" + 'chars']
 
-        for curr_dir in dirs:
-            for img in os.listdir(curr_dir):
-                splitedArray = re.split('\\\|\.', img)
-                temp = InputFormatting.png_to_base64(curr_dir+"\\"+img)
-                result[splitedArray[-2]] = temp
-                count += 1
-        # result['noElem'] = count
-        return result
+            for curr_dir in dirs:
+                for img in os.listdir(curr_dir):
+                    splitedArray = re.split('\\\|\.', img)
+                    temp = InputFormatting.png_to_base64(curr_dir + "\\" + img)
+
+                    if curr_dir is dirs[2]:
+                        current_char = cv2.imread(curr_dir + "\\" + img, 0)
+                        # ImageNormaliser.plotData(current_char)
+                        predict = clf.predict(current_char)
+                        temp = predict + temp
+                    result[splitedArray[-2]] = temp
+                    count += 1
+
+            return result
+
+        else:
+
+            result = dict()
+            count = 0
+            dirs = [self.path + "\\" + 'lines',
+            self.path + "\\" + 'words',
+            self.path + "\\" + 'chars']
+
+            for curr_dir in dirs:
+                for img in os.listdir(curr_dir):
+                    splitedArray = re.split('\\\|\.', img)
+                    temp = InputFormatting.png_to_base64(curr_dir + "\\" + img)
+                    if curr_dir is dirs[2]:
+                        current_char = cv2.imread(curr_dir+"\\"+img, 0)
+                        # ImageNormaliser.plotData(current_char)
+                        temp = '0' + temp
+
+                    result[splitedArray[-2]] = temp
+                    count += 1
+
+            return result
 
 
 class CharClassifier:
@@ -751,14 +781,13 @@ class CharClassifier:
                   8: 104, 9: 105, 10: 106, 11: 108, 12: 109, 13: 110,
                   14: 111, 15: 112, 16: 113, 17: 114, 18: 115, 19: 116,
                   20: 117, 21: 118, 22: 122}
-
         img = img.reshape(1, 64, 64, 1)
         predictions = self.model.predict(img)
         print(predictions)
         predicted_label = np.argmax(predictions, axis=1)
-        letter = labels[int(predicted_label[0])]
+        letter = labels[int(predicted_label[0]) + 1 ]
         print(">>Litera : " + chr(letter) + "   " + str(predicted_label))
-
+        return chr(letter)
 
 def test(img):
     line_builder = LineBuilder(img)
@@ -796,6 +825,7 @@ def get_elems(img):
                 clf.predict(char.image)
                 ImageNormaliser.plotData(char.image)
 
+
 def show_projection(im, values):
     img = np.zeros((im.shape[0], im.shape[1]))
 
@@ -805,23 +835,25 @@ def show_projection(im, values):
 
     ImageNormaliser.plotData(img)
 
-if __name__ == "__main__":
-    print(">>Start")
-    data_reader = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
-    image = data_reader.image
-    ImageNormaliser.plotData(image)
-    # name = 'vala'
-    # path = str(os.getcwd()) + '\\temporary\\' + name
-    #
-    #
-    # ir = OutputBuilder(path)
-    # # ir.build_images()
-    # res = ir.build_output_dict()
-    #
-    # for k, v in res.items():
-    #     print(str(k) + "   " + str(v))
 
-    image = image_norm(image)
-    get_elems(image)
-    # test(image)
+if __name__ == "__main__":
+    # print(">>Start")
+    # data_reader = DataToImage("tempFiles/fis.txt", "tempFiles/newImage.png")
+    # image = data_reader.image
+    # ImageNormaliser.plotData(image)
+    # # name = 'vala'
+    # # path = str(os.getcwd()) + '\\temporary\\' + name
+    # #
+    # #
+    # # ir = OutputBuilder(path)
+    # # # ir.build_images()
+    # # res = ir.build_output_dict()
+    # #
+    # # for k, v in res.items():
+    # #     print(str(k) + "   " + str(v))
+    #
+    # image = image_norm(image)
+    # get_elems(image)
+    # # test(image)
+    pass
 
